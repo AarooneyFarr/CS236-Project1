@@ -18,14 +18,15 @@ void Lexer::CreateAutomata() {
 
 void Lexer::Run(std::string& input) {
     // TODO: convert this pseudo-code with the algorithm into actual C++ code
-    /*
-    set lineNumber to 1
+
+    int lineNumber = 1;
+
     // While there are more characters to tokenize
-    loop while input.size() > 0 {
-        set maxRead to 0
+    while (input.size() > 0) {
+        int maxRead = 0;
         set maxAutomaton to the first automaton in automata
 
-        // TODO: you need to handle whitespace inbetween tokens
+        // TODO: you need to handle whitespace in between tokens
 
         // Here is the "Parallel" part of the algorithm
         //   Each automaton runs with the same input
@@ -53,6 +54,6 @@ void Lexer::Run(std::string& input) {
         // Update `input` by removing characters read to create Token
         remove maxRead characters from input
     }
-    add end of file token to all tokens
-    */
+    //add end of file token to all tokens
+
 }
