@@ -49,7 +49,14 @@ void Lexer::Run(std::string& input) {
 
         
         if(isspace(input[0])){
-            input.erase(0,1);
+            if(input[0] == '\n'){
+                input.erase(0,1);
+                lineNumber++;
+            }
+            else{
+                input.erase(0,1);
+            }
+
         }
 
         // Here is the "Parallel" part of the algorithm
