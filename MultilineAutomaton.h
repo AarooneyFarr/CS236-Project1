@@ -22,4 +22,4 @@ public:
     void S0(const std::string& input);
 };
 
-#endif MULTILINEAUTOMATON_H
+#endif // MULTILINEAUTOMATON_H

@@ -20,7 +20,7 @@ void StringAutomaton::S1(const std::string& input) {
     //bool test = isspace(tester);
     //bool test2 = (isspace(input[index]) && input[index] != '\n');
     //bool test3 = (input[index] != '\n');
-    if (isalnum(input[index]) || (isspace(input[index]) && input[index] != '\n')) {
+    if (isalnum(input[index]) || (isspace(input[index]) && input[index] != '\n') || (ispunct(input[index]) && input[index] != '\'')) {
         inputRead++;
         index++;
         S1(input);
@@ -38,6 +38,7 @@ void StringAutomaton::S1(const std::string& input) {
     }
     else{
         this->type = TokenType::UNDEFINED;
+        
     }
 
 
@@ -45,7 +46,7 @@ void StringAutomaton::S1(const std::string& input) {
 
 void StringAutomaton::S2(const std::string& input) {
     if (isalnum(input[index])) {
-        Serr();
+       // Serr();
     }
     else if(input[index] == '\''){
         inputRead++;

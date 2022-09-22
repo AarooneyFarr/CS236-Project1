@@ -27,7 +27,7 @@ void MultilineAutomaton::S1(const std::string& input) {
 }
 
 void MultilineAutomaton::S2(const std::string& input) {
-    char tester = input[index];
+    //char tester = input[index];
     if (isalnum(input[index]) || isspace(input[index])) {
         if(input[index] == '\n'){
             newLines++;
@@ -58,7 +58,7 @@ void MultilineAutomaton::S2(const std::string& input) {
 }
 
 void MultilineAutomaton::S3(const std::string& input) {
-    char tester2 = input[index];
+    //char tester2 = input[index];
     if (input[index] == '#') {
         inputRead++;
         //index++;
