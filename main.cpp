@@ -26,7 +26,7 @@ int main(int argc, char** argv) {
         std::cout << token->toString() << std::endl;
     }
 
-    std::cout << "Total Tokens = " << tokens.size() << std::endl;
+    std::cout << "Total Tokens = " << tokens.size();
 
     delete lexer;
 
