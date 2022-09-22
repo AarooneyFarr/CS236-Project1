@@ -1,3 +1,0 @@
-C:/Users/TheAa/Documents/School/CS-236/Project1_Starter_Code/cmake-build-debug/CMakeFiles/Project1_Starter_Code.dir
-C:/Users/TheAa/Documents/School/CS-236/Project1_Starter_Code/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/TheAa/Documents/School/CS-236/Project1_Starter_Code/cmake-build-debug/CMakeFiles/rebuild_cache.dir
