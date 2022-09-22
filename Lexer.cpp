@@ -64,6 +64,9 @@ void Lexer::Run(std::string& input) {
             }
 
         }
+        if((input.size() == 0)){
+            break;
+        }
 
         // Here is the "Parallel" part of the algorithm
         //   Each automaton runs with the same input
