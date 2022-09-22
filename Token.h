@@ -31,7 +31,7 @@ private:
     int line = 0;
     TokenType type = TokenType::UNDEFINED;
 
-
+    std::string typeToString(TokenType type);
 public:
     Token() : Token(TokenType::UNDEFINED, "undefined??", 0){}
 
