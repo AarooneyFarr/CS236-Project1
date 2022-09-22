@@ -16,10 +16,10 @@ void StringAutomaton::S0(const std::string& input) {
 }
 
 void StringAutomaton::S1(const std::string& input) {
-    char tester = input[index];
-    bool test = isspace(tester);
-    bool test2 = (isspace(input[index]) && input[index] != '\n');
-    bool test3 = (input[index] != '\n');
+    //char tester = input[index];
+    //bool test = isspace(tester);
+    //bool test2 = (isspace(input[index]) && input[index] != '\n');
+    //bool test3 = (input[index] != '\n');
     if (isalnum(input[index]) || (isspace(input[index]) && input[index] != '\n')) {
         inputRead++;
         index++;
