@@ -22,9 +22,9 @@ void CommentAutomaton::S1(const std::string& input) {
         S2(input);
     }
     else if(input[index] == '\n'){
-        inputRead++;
-        index++;
-        newLines++;
+        //inputRead++;
+        
+        //newLines++;
         S2(input);
     }
     else{
