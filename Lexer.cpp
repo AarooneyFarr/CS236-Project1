@@ -64,7 +64,7 @@ void Lexer::Run(std::string& input) {
         }
         // Here is the "Max" part of the algorithm
         if (maxRead > 0) {
-            Token* newToken = maxAutomaton->CreateToken(input, lineNumber);
+            Token* newToken = maxAutomaton->CreateToken(input.substr(0, maxRead), lineNumber);
             lineNumber += maxAutomaton->NewLinesRead();
             tokens.push_back(newToken);
         }
