@@ -16,15 +16,21 @@ void CommentAutomaton::S0(const std::string& input) {
 }
 
 void CommentAutomaton::S1(const std::string& input) {
-    if (isalnum(input[index]) || (isspace(input[index]) && input[index] != '\n')) {
+    if (input[index] == EOF ) {
+        inputRead++;
+        index++;
+        S2(input);
+    }
+    else if(input[index] == '\n'){
+        inputRead++;
+        index++;
+        newLines++;
+        S2(input);
+    }
+    else{
         inputRead++;
         index++;
         S1(input);
-    }
-    else if(input[index] == EOF || input[index] == '\n'){
-        //inputRead++;
-        //index++;
-        S2(input);
     }
 
 
