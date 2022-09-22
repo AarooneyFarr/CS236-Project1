@@ -15,6 +15,7 @@
 #include "CommaAutomaton.h"
 #include "StringAutomaton.h"
 #include "CommentAutomaton.h"
+#include "MultilineAutomaton.h"
 
 
 Lexer::Lexer() {
@@ -36,6 +37,7 @@ void Lexer::CreateAutomata() {
     automata.push_back(new CommaAutomaton());
     automata.push_back(new StringAutomaton());
     automata.push_back(new CommentAutomaton());
+    automata.push_back(new MultilineAutomaton());
     automata.push_back(new RulesAutomaton());
     automata.push_back(new FactsAutomaton());
     automata.push_back(new QueriesAutomaton());
