@@ -37,7 +37,7 @@ void MultilineAutomaton::S2(const std::string& input) {
         S2(input);
     }
     else if(input[index] == '\0'){
-        //Serr();
+        this->type = TokenType::UNDEFINED;
     }
     else if(input[index] == '|'){
         inputRead++;
@@ -65,7 +65,7 @@ void MultilineAutomaton::S3(const std::string& input) {
         //S2(input);
     }
     else if (input[index] == '\0') {
-        //Serr();
+        this->type = TokenType::UNDEFINED;
     }
     else{
         if(input[index] == '\n'){

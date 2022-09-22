@@ -27,7 +27,7 @@ void CommentAutomaton::S1(const std::string& input) {
         //newLines++;
         S2(input);
     }
-    else if(input[index] == '|'){
+    else if(input[index] == '|' && index == 1){
         Serr();
     }
     else{
