@@ -26,6 +26,7 @@ std::string Token::typeToString(TokenType type){
         case TokenType::QUERIES: return "QUERIES"; break;
         case TokenType::UNDEFINED: return "UNDEFINED"; break;
         case TokenType::ID: return "ID"; break;
+        case TokenType::STRING: return "STRING"; break;
 
     }
 

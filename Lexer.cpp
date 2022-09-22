@@ -13,6 +13,7 @@
 #include "SchemesAutomaton.h"
 #include "IdAutomaton.h"
 #include "CommaAutomaton.h"
+#include "StringAutomaton.h"
 
 
 Lexer::Lexer() {
@@ -32,6 +33,7 @@ void Lexer::CreateAutomata() {
     automata.push_back(new AddAutomaton());
     automata.push_back(new PeriodAutomaton());
     automata.push_back(new CommaAutomaton());
+    automata.push_back(new StringAutomaton());
     automata.push_back(new RulesAutomaton());
     automata.push_back(new FactsAutomaton());
     automata.push_back(new QueriesAutomaton());
@@ -52,7 +54,7 @@ void Lexer::Run(std::string& input) {
         Automaton * maxAutomaton = automata.front();
 
         
-        if(isspace(input[0])){
+        while(isspace(input[0])){
             if(input[0] == '\n'){
                 input.erase(0,1);
                 lineNumber++;

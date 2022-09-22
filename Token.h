@@ -19,6 +19,7 @@ enum class TokenType {
     RULES,
     SCHEMES,
     ID,
+    STRING,
 
     // TODO: add the other types of tokens
     UNDEFINED
