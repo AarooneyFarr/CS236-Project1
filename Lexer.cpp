@@ -11,6 +11,8 @@
 #include "QueriesAutomaton.h"
 #include "QuestionMarkAutomaton.h"
 #include "SchemesAutomaton.h"
+#include "IdAutomaton.h"
+#include "CommaAutomaton.h"
 
 
 Lexer::Lexer() {
@@ -29,11 +31,13 @@ void Lexer::CreateAutomata() {
     automata.push_back(new RightParenAutomaton());
     automata.push_back(new AddAutomaton());
     automata.push_back(new PeriodAutomaton());
+    automata.push_back(new CommaAutomaton());
     automata.push_back(new RulesAutomaton());
     automata.push_back(new FactsAutomaton());
     automata.push_back(new QueriesAutomaton());
     automata.push_back(new QuestionMarkAutomaton());
     automata.push_back(new SchemesAutomaton());
+    automata.push_back(new IdAutomaton());
     // TODO: Add the other needed automata here
 }
 
