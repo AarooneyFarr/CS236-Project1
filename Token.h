@@ -18,6 +18,7 @@ enum class TokenType {
     Q_MARK,
     RULES,
     SCHEMES,
+    ID,
 
     // TODO: add the other types of tokens
     UNDEFINED
