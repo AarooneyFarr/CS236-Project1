@@ -6,7 +6,7 @@
 //}
 
 std::string Token::toString(){
-    return ("(" + typeToString(this->type) + "," + this->description + "," + std::to_string(this->line) + ")");
+    return ("(" + typeToString(this->type) + ",\"" + this->description + "\"," + std::to_string(this->line) + ")");
 }
 
 std::string Token::typeToString(TokenType type){
