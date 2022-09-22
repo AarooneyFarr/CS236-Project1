@@ -1,7 +1,7 @@
 #ifndef LEXER_H
 #define LEXER_H
 #include <vector>
-#include "Automaton.h"
+#include "Automata/Automaton.h"
 #include "Token.h"
 
 class Lexer
@@ -21,6 +21,9 @@ public:
     void Run(std::string& input);
     
     // TODO: add other public methods here
+    std::vector<Token*> getTokens() {
+        return this->tokens;
+    }
 
 };
 

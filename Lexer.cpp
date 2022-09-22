@@ -1,16 +1,16 @@
 #include "Lexer.h"
-#include "ColonAutomaton.h"
-#include "ColonDashAutomaton.h"
-#include "LeftParenAutomaton.h"
-#include "MultiplyAutomaton.h"
-#include "RightParenAutomaton.h"
-#include "AddAutomaton.h"
-#include "PeriodAutomaton.h"
-#include "RulesAutomaton.h"
-#include "FactsAutomaton.h"
-#include "QueriesAutomaton.h"
-#include "QuestionMarkAutomaton.h"
-#include "SchemesAutomaton.h"
+#include "Automata/ColonAutomaton.h"
+#include "Automata/ColonDashAutomaton.h"
+#include "Automata/LeftParenAutomaton.h"
+#include "Automata/MultiplyAutomaton.h"
+#include "Automata/RightParenAutomaton.h"
+#include "Automata/AddAutomaton.h"
+#include "Automata/PeriodAutomaton.h"
+#include "Automata/RulesAutomaton.h"
+#include "Automata/FactsAutomaton.h"
+#include "Automata/QueriesAutomaton.h"
+#include "Automata/QuestionMarkAutomaton.h"
+#include "Automata/SchemesAutomaton.h"
 
 
 Lexer::Lexer() {
@@ -47,7 +47,10 @@ void Lexer::Run(std::string& input) {
         int maxRead = 0;
         Automaton * maxAutomaton = automata.front();
 
-        // TODO: you need to handle whitespace in between tokens
+        
+        if(isspace(input[0])){
+            input.erase(0,1);
+        }
 
         // Here is the "Parallel" part of the algorithm
         //   Each automaton runs with the same input
