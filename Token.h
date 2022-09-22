@@ -20,6 +20,7 @@ enum class TokenType {
     SCHEMES,
     ID,
     STRING,
+    endOF,
 
     // TODO: add the other types of tokens
     UNDEFINED
