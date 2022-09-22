@@ -21,6 +21,7 @@ enum class TokenType {
     ID,
     STRING,
     endOF,
+    COMMENT,
 
     // TODO: add the other types of tokens
     UNDEFINED

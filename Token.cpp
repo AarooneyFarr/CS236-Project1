@@ -27,6 +27,7 @@ std::string Token::typeToString(TokenType type){
         case TokenType::UNDEFINED: return "UNDEFINED"; break;
         case TokenType::ID: return "ID"; break;
         case TokenType::STRING: return "STRING"; break;
+        case TokenType::COMMENT: return "COMMENT"; break;
         case TokenType::endOF: return "EOF"; break;
 
     }
