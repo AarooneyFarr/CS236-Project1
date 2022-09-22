@@ -1,6 +1,17 @@
 #include "Lexer.h"
 #include "ColonAutomaton.h"
 #include "ColonDashAutomaton.h"
+#include "LeftParenAutomaton.h"
+#include "MultiplyAutomaton.h"
+#include "RightParenAutomaton.h"
+#include "AddAutomaton.h"
+#include "PeriodAutomaton.h"
+#include "RulesAutomaton.h"
+#include "FactsAutomaton.h"
+#include "QueriesAutomaton.h"
+#include "QuestionMarkAutomaton.h"
+#include "SchemesAutomaton.h"
+
 
 Lexer::Lexer() {
     CreateAutomata();
@@ -24,13 +35,14 @@ void Lexer::Run(std::string& input) {
     // While there are more characters to tokenize
     while (input.size() > 0) {
         int maxRead = 0;
-        set maxAutomaton to the first automaton in automata
+        let maxAutomaton to the first automaton in automata
 
         // TODO: you need to handle whitespace in between tokens
 
         // Here is the "Parallel" part of the algorithm
         //   Each automaton runs with the same input
-        foreach automaton in automata {
+        // foreach automaton in automata {
+        for(Automaton automaton : automata){
             inputRead = automaton.Start(input)
             if (inputRead > maxRead) {
                 set maxRead to inputRead
