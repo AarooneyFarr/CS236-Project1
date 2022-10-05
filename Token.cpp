@@ -34,3 +34,9 @@ std::string Token::typeToString(TokenType type){
 
     return "ERROR";
 }
+
+std::string Token::getTypeString() {
+    return typeToString(type);
+}
+
+

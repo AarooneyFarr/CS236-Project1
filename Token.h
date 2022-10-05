@@ -35,6 +35,9 @@ private:
     int line = 0;
     TokenType type = TokenType::UNDEFINED;
 
+
+private:
+
     std::string typeToString(TokenType type);
 public:
     Token() : Token(TokenType::UNDEFINED, "undefined??", 0){}
@@ -47,6 +50,11 @@ public:
 
     // TODO: add other needed methods
     std::string toString();
+
+    std::string getTypeString();
+    TokenType getType() const;
+
+
 };
 
 #endif // TOKEN_H
