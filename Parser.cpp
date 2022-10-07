@@ -4,10 +4,13 @@
 
 #include "Parser.h"
 #include <iostream>
+#include <algorithm>
 
 Parser::Parser() {
 
 }
+
+
 
 DatalogProgram* Parser::parseDatalogProgram() {
     std::vector<Predicate*> schemes;
@@ -17,19 +20,6 @@ DatalogProgram* Parser::parseDatalogProgram() {
 
     Predicate* scheme;
 
-//    for(Token* token : tokens){
-//        while(tokens[currToken]->getType() == TokenType::COMMENT){
-//
-//            tokens.erase(tokens.begin() + currToken);
-//
-//        }
-//    }
-
-    for(int i = tokens.size() - 1; i >= 0; i--) {
-        if(tokens[currToken]->getType() == TokenType::COMMENT) {
-            tokens.erase( tokens.begin() + i );
-        }
-    }
 
 
     match(TokenType::SCHEMES);
@@ -86,14 +76,22 @@ DatalogProgram* Parser::parse(std::vector<Token*> tokens) {
 
 void Parser::parseSchemeList(std::vector<Predicate *>& schemes) {
     //Token* tester = tokens[currToken];
+    while(tokens[currToken]->getType() == TokenType::COMMENT){
+           tokens.erase(tokens.begin() + currToken);
+       }
 
     if(tokens[currToken]->getTypeString() == "ID"){
         schemes.push_back(parseScheme());
+        
         parseSchemeList(schemes);
     }
 }
 
 void Parser::parseFactList(std::vector<Predicate *> &facts) {
+       while(tokens[currToken]->getType() == TokenType::COMMENT){
+           tokens.erase(tokens.begin() + currToken);
+       }
+
     if(tokens[currToken]->getTypeString() == "ID"){
         std::string test = tokens[currToken]->getDescription();
         facts.push_back(parseFact());
@@ -103,6 +101,9 @@ void Parser::parseFactList(std::vector<Predicate *> &facts) {
 
 void Parser::parseRuleList(std::vector<Rule *> &rules) {
     //Token* tester = tokens[currToken];
+    while(tokens[currToken]->getType() == TokenType::COMMENT){
+           tokens.erase(tokens.begin() + currToken);
+       }
 
     if(tokens[currToken]->getTypeString() == "ID"){
         rules.push_back(parseRule());
@@ -112,6 +113,10 @@ void Parser::parseRuleList(std::vector<Rule *> &rules) {
 }
 
 void Parser::parseQueryList(std::vector<Predicate *> &queries) {
+    while(tokens[currToken]->getType() == TokenType::COMMENT){
+           tokens.erase(tokens.begin() + currToken);
+       }
+
     if(tokens[currToken]->getTypeString() == "ID"){
         queries.push_back(parseQuery());
         parseQueryList(queries);
@@ -121,7 +126,7 @@ void Parser::parseQueryList(std::vector<Predicate *> &queries) {
 Predicate* Parser::parseScheme() {
     Predicate* pred = new Predicate();
 
-
+    
 
     pred->addId(match(TokenType::ID));
     match(TokenType::LEFT_PAREN);
@@ -262,6 +267,16 @@ std::string Parser::match(TokenType matchTokenType) {
 
     //int size = tokens.size();
 
+    while(tokens[currToken]->getType() == TokenType::COMMENT){
+
+           //std::cout << "erased token" << tokens[currToken]->toString() << std::endl;
+           tokens.erase(tokens.begin() + currToken);
+           
+        //std::cout << "new current token:" << tokens[currToken]->toString() << std::endl;
+
+
+       }
+
 
     if(matchTokenType == tokens[currToken]->getType()){
         //size = tokens.size();
@@ -274,7 +289,8 @@ std::string Parser::match(TokenType matchTokenType) {
     }
     else{
         std::string des = tokens[currToken]->getDescription();
-
+        //std::cout << "MatchType: " << Token(matchTokenType, "", 0).getTypeString() << std::endl;
+        //std::cout << "TokenSpotter: " << tokens[currToken]->toString() << std::endl;
         throw tokens[currToken];
 
     }
