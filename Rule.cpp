@@ -22,7 +22,7 @@ std::string Rule::toString() {
 
     }
 
-    std::string ruleString = this->headPredicate->toString() + " :- " + predString + ".";
+    std::string ruleString = this->headPredicate->toString() + " :- " + predString;
 
     return ruleString;
 }

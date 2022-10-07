@@ -3,6 +3,7 @@
 //
 
 #include "DatalogProgram.h"
+#include <algorithm>
 
 DatalogProgram::DatalogProgram() {
 
@@ -14,6 +15,7 @@ std::string DatalogProgram::toString() {
     std::string factsString = "";
     std::string rulesString = "";
     std::string queriesString = "";
+    std::string domainsString = "";
 
     //Schemes
     std::string schemes = "";
@@ -43,7 +45,17 @@ std::string DatalogProgram::toString() {
     }
     queriesString = "Queries(" + std::to_string(this->queries.size()) + "):\n" + queries;
 
-    datalogString = schemesString + factsString + rulesString + queriesString;
+    //Domains
+    std::string domains = "";
+
+    //std::sort(this->domains.begin(), this->domains.end());
+
+    for(std::string domain : this->domains){
+        domains += "  " + domain + "\n";
+    }
+    domainsString = "Domains(" + std::to_string(this->domains.size()) + "):\n" + domains;
+
+    datalogString = schemesString + factsString + rulesString + queriesString + domainsString;
 
     return datalogString;
 }

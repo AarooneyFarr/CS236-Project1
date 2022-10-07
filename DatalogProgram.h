@@ -8,6 +8,7 @@
 #include "Predicate.h"
 #include "Rule.h"
 #include <vector>
+#include <set>
 #include <string>
 
 
@@ -17,16 +18,17 @@ private:
     std::vector<Predicate*> facts;
     std::vector<Predicate*> queries;
     std::vector<Rule*> rules;
-    std::vector<std::string*>* domains;
+    std::set<std::string> domains;
 
 public:
     DatalogProgram();
 
-    DatalogProgram(std::vector<Predicate*> schemes, std::vector<Predicate*> facts, std::vector<Rule*> rules, std::vector<Predicate*> queries ){
+    DatalogProgram(std::vector<Predicate*> schemes, std::vector<Predicate*> facts, std::vector<Rule*> rules, std::vector<Predicate*> queries, std::set<std::string> domains){
         this->schemes = schemes;
         this->facts = facts;
         this->rules = rules;
         this->queries = queries;
+        this->domains = domains;
     }
 
 

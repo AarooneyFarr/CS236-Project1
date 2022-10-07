@@ -36,7 +36,7 @@ DatalogProgram* Parser::parseDatalogProgram() {
     parseQueryList(queries);
     match(TokenType::endOF);
 
-    return new DatalogProgram(schemes, facts, rules, queries);
+    return new DatalogProgram(schemes, facts, rules, queries, this->domains);
 }
 
 //void Parser::parse(std::vector<Token*> tokens) {
@@ -125,7 +125,9 @@ Predicate* Parser::parseFact() {
 
     pred->addId(match(TokenType::ID));
     match(TokenType::LEFT_PAREN);
-    pred->addParam(new Parameter(match(TokenType::STRING)));
+    std::string domain = match(TokenType::STRING);
+    this->domains.insert(domain);
+    pred->addParam(new Parameter(domain));
     parseStringList(pred);
     match(TokenType::RIGHT_PAREN);
     match(TokenType::PERIOD);
@@ -207,7 +209,9 @@ void Parser::parseParameterList(Predicate* &pred) {
 void Parser::parseStringList(Predicate* &pred) {
     if(tokens[currToken]->getTypeString() == "COMMA"){
         match(TokenType::COMMA);
-        pred->addParam(new Parameter(match(TokenType::STRING)));
+        std::string domain = match(TokenType::STRING);
+        this->domains.insert(domain);
+        pred->addParam(new Parameter(domain));
         parseStringList(pred);
     }
 }

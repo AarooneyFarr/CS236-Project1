@@ -5,6 +5,7 @@
 #ifndef PARSER_H
 #define PARSER_H
 #include <vector>
+#include <set>
 #include "Token.h"
 #include "DatalogProgram.h"
 #include "Predicate.h"
@@ -17,6 +18,7 @@ private:
     DatalogProgram* program;
     std::vector<Token*> tokens;
     int currToken = 0;
+    std::set<std::string> domains;
 
     std::string match(TokenType matchTokenType);
 
