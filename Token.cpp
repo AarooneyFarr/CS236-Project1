@@ -39,4 +39,11 @@ std::string Token::getTypeString() {
     return typeToString(type);
 }
 
+TokenType Token::getType() {
+    return type;
+}
+
+std::string Token::getDescription() {
+    return this->description;
+}
 

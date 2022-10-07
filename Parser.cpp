@@ -3,158 +3,258 @@
 //
 
 #include "Parser.h"
+#include <iostream>
 
-void Parser::parseDatalogProgram() {
+Parser::Parser() {
+
+}
+
+DatalogProgram* Parser::parseDatalogProgram() {
+    std::vector<Predicate*> schemes;
+    std::vector<Predicate *> facts;
+    std::vector<Rule *> rules;
+    std::vector<Predicate *> queries;
+
+    Predicate* scheme;
+
+
+
     match(TokenType::SCHEMES);
     match(TokenType::COLON);
-    parseScheme();
-    parseSchemeList();
+    scheme = parseScheme();
+    schemes.push_back(scheme);
+    parseSchemeList(schemes);
     match(TokenType::FACTS);
     match(TokenType::COLON);
-    parseFactList();
+    parseFactList(facts);
     match(TokenType::RULES);
     match(TokenType::COLON);
-    parseRuleList();
+    parseRuleList(rules);
     match(TokenType::QUERIES);
     match(TokenType::COLON);
-    parseQuery();
-    parseQueryList();
+    queries.push_back(parseQuery());
+    parseQueryList(queries);
     match(TokenType::endOF);
+
+    return new DatalogProgram(schemes, facts, rules, queries);
 }
 
-void Parser::Parse() {
+//void Parser::parse(std::vector<Token*> tokens) {
+//    try{
+//        this->tokens = tokens;
+//        parseDatalogProgram();
+//        std::cout << "Success!" << std::endl;
+//    }
+//    catch (Token* t) {
+//        std::cout << t->toString() << " caused an error!" << std::endl;
+//    }
+//}
 
+DatalogProgram* Parser::parse(std::vector<Token*> tokens) {
+
+
+    try{
+        this->tokens = tokens;
+        this->program = parseDatalogProgram();
+        std::cout << "Success!" << std::endl;
+        //std::string tester =  program->toString();
+
+        return program;
+    }
+    catch (Token* t) {
+        std::cout << t->toString() << " caused an error!" << std::endl;
+    }
+
+    return new DatalogProgram();
 }
 
-DatalogProgram Parser::parse() {
-    return DatalogProgram();
-}
+void Parser::parseSchemeList(std::vector<Predicate *>& schemes) {
+    Token* tester = tokens[currToken];
 
-void Parser::parseSchemeList() {
     if(tokens[currToken]->getTypeString() == "ID"){
-        parseScheme();
-        parseSchemeList();
+        schemes.push_back(parseScheme());
+        parseSchemeList(schemes);
     }
 }
 
-void Parser::parseFactList() {
+void Parser::parseFactList(std::vector<Predicate *> &facts) {
     if(tokens[currToken]->getTypeString() == "ID"){
-        parseFact();
-        parseFactList();
+        std::string test = tokens[currToken]->getDescription();
+        facts.push_back(parseFact());
+        parseFactList(facts);
     }
 }
 
-void Parser::parseRuleList() {
+void Parser::parseRuleList(std::vector<Rule *> &rules) {
+    Token* tester = tokens[currToken];
+
     if(tokens[currToken]->getTypeString() == "ID"){
-        parseRule();
-        parseRuleList();
+        rules.push_back(parseRule());
+
+        parseRuleList(rules);
     }
 }
 
-void Parser::parseQueryList() {
+void Parser::parseQueryList(std::vector<Predicate *> &queries) {
     if(tokens[currToken]->getTypeString() == "ID"){
-        parseQuery();
-        parseQueryList();
+        queries.push_back(parseQuery());
+        parseQueryList(queries);
     }
 }
 
-void Parser::parseScheme() {
-    match(TokenType::ID);
+Predicate* Parser::parseScheme() {
+    Predicate* pred = new Predicate();
+
+
+
+    pred->addId(match(TokenType::ID));
     match(TokenType::LEFT_PAREN);
-    match(TokenType::ID);
-    parseIdList();
+    pred->addParam(new Parameter(match(TokenType::ID)));
+    parseIdList(pred);
     match(TokenType::RIGHT_PAREN);
+
+    //this->currToken--;
+
+    return pred;
 }
 
-void Parser::parseFact() {
-    match(TokenType::ID);
+Predicate* Parser::parseFact() {
+    Predicate* pred = new Predicate();
+
+
+
+    pred->addId(match(TokenType::ID));
     match(TokenType::LEFT_PAREN);
-    match(TokenType::STRING);
-    parseStringList();
+    pred->addParam(new Parameter(match(TokenType::STRING)));
+    parseStringList(pred);
     match(TokenType::RIGHT_PAREN);
     match(TokenType::PERIOD);
+
+
+    return pred;
 }
 
-void Parser::parseRule() {
-    parseHeadPredicate();
+Rule* Parser::parseRule() {
+    Rule* rule = new Rule();
+
+
+
+    rule->setHeadPredicate(parseHeadPredicate());
     match(TokenType::COLON_DASH);
-    parsePredicate();
-    parsePredicateList();
+    rule->addPredicate(parsePredicate());
+    parsePredicateList(rule);
     match(TokenType::PERIOD);
+
+    //Token* tester = tokens[currToken];
+    //std::string who = rule->toString();
+
+//    parseHeadPredicate();
+//    match(TokenType::COLON_DASH);
+//    parsePredicate();
+//    parsePredicateList(rule);
+//    match(TokenType::PERIOD);
+
+    return rule;
 }
 
-void Parser::parseQuery() {
-    parsePredicate();
+Predicate* Parser::parseQuery() {
+    Predicate* pred = parsePredicate();
     match(TokenType::Q_MARK);
+
+    return pred;
 }
 
-void Parser::parseHeadPredicate() {
-    match(TokenType::ID);
+Predicate* Parser::parseHeadPredicate() {
+    Predicate* pred = new Predicate();
+
+    pred->addId(match(TokenType::ID));
     match(TokenType::LEFT_PAREN);
-    match(TokenType::ID);
-    parseIdList();
+    pred->addParam(new Parameter(match(TokenType::ID)));
+    parseIdList(pred);
     match(TokenType::RIGHT_PAREN);
+
+    return pred;
 }
 
-void Parser::parsePredicate() {
-    match(TokenType::ID);
+Predicate* Parser::parsePredicate() {
+    Predicate* pred = new Predicate();
+
+    pred->addId(match(TokenType::ID));
     match(TokenType::LEFT_PAREN);
-    match(TokenType::ID);
-    parseParameter();
-    parseParameterList();
+    parseParameter(pred);
+    parseParameterList(pred);
     match(TokenType::RIGHT_PAREN);
+
+    return pred;
 }
 
-void Parser::parsePredicateList() {
+void Parser::parsePredicateList(Rule* &rule) {
     if(tokens[currToken]->getTypeString() == "COMMA"){
         match(TokenType::COMMA);
-        parsePredicate();
-        parsePredicateList();
+        rule->addPredicate(parsePredicate());
+        parsePredicateList(rule);
     }
 }
 
-void Parser::parseParameterList() {
+void Parser::parseParameterList(Predicate* &pred) {
     if(tokens[currToken]->getTypeString() == "COMMA"){
         match(TokenType::COMMA);
-        parseParameter();
-        parseParameterList();
+        parseParameter(pred);
+        parseParameterList(pred);
     }
 }
 
-void Parser::parseStringList() {
+void Parser::parseStringList(Predicate* &pred) {
     if(tokens[currToken]->getTypeString() == "COMMA"){
         match(TokenType::COMMA);
-        match(TokenType::STRING);
-        parseStringList();
+        pred->addParam(new Parameter(match(TokenType::STRING)));
+        parseStringList(pred);
     }
 }
 
-void Parser::parseIdList() {
+void Parser::parseIdList(Predicate* &pred) {
     if(tokens[currToken]->getTypeString() == "COMMA"){
         match(TokenType::COMMA);
-        match(TokenType::ID);
-        parseIdList();
+        pred->addParam(new Parameter(match(TokenType::ID)));
+        parseIdList(pred);
     }
 }
 
-void Parser::parseParameter() {
+void Parser::parseParameter(Predicate* &pred) {
+
     if(tokens[currToken]->getTypeString() == "STRING"){
-        match(TokenType::STRING);
+        pred->addParam(new Parameter(match(TokenType::STRING)));
     }
     else if(tokens[currToken]->getTypeString() == "ID")
     {
-        match(TokenType::ID);
+        pred->addParam(new Parameter(match(TokenType::ID)));
     }
     else{
         throw tokens[currToken];
     }
 }
 
-void Parser::match(TokenType matchTokenType) {
+std::string Parser::match(TokenType matchTokenType) {
+    //Token* tester = tokens[currToken];
+//    for(Token* token : tokens){
+//        std::cout << token->toString() << std::endl;
+//    }
+
+    int size = tokens.size();
+
     if(matchTokenType == tokens[currToken]->getType()){
+        size = tokens.size();
+        std::string des = tokens[currToken]->getDescription();
+        size = tokens.size();
         currToken++;
+        size = tokens.size();
+
+        return des;
     }
     else{
-        throw new Token(matchTokenType, " ", 0);
+        std::string des = tokens[currToken]->getDescription();
+
+        throw tokens[currToken];
+
     }
 }

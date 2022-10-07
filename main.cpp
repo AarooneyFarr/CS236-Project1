@@ -1,4 +1,5 @@
 #include "Lexer.h"
+#include "Parser.h"
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -6,6 +7,7 @@
 int main(int argc, char** argv) {
 
     Lexer* lexer = new Lexer();
+    Parser* parser = new Parser();
 
     std::string input = "";
 
@@ -22,14 +24,18 @@ int main(int argc, char** argv) {
     lexer->Run(input);
     std::vector<Token*> tokens = lexer->getTokens();
 
-    for(Token* token : tokens){
-        std::cout << token->toString() << std::endl;
-    }
 
-    std::string count = "Total Tokens = " + std::to_string(tokens.size());
-    std::cout << count;
+    std::cout << parser->parse(tokens)->toString() << std::endl;
 
-    delete lexer;
+//    for(Token* token : tokens){
+//        std::cout << token->toString() << std::endl;
+//    }
+
+//    std::string count = "Total Tokens = " + std::to_string(tokens.size());
+//    std::cout << count;
+
+    //delete lexer;
+    //delete parser;
 
     return 0;
 }

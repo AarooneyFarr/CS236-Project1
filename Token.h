@@ -52,7 +52,8 @@ public:
     std::string toString();
 
     std::string getTypeString();
-    TokenType getType() const;
+    TokenType getType();
+    std::string getDescription();
 
 
 };

@@ -7,42 +7,46 @@
 #include <vector>
 #include "Token.h"
 #include "DatalogProgram.h"
+#include "Predicate.h"
+#include "Rule.h"
+#include "Parameter.h"
 
 
 class Parser {
 private:
-    DatalogProgram program;
+    DatalogProgram* program;
     std::vector<Token*> tokens;
     int currToken = 0;
 
-    void match(TokenType matchTokenType);
+    std::string match(TokenType matchTokenType);
 
 public:
+    Parser();
+    ~Parser();
 
+    //void parse(std::vector<Token*> tokens);
+    DatalogProgram * parse(std::vector<Token*> tokens);
 
-    void Parse();
-    DatalogProgram parse();
+    DatalogProgram* parseDatalogProgram();
 
-    void parseDatalogProgram();
+    void parseSchemeList(std::vector<Predicate *> & schemes);
+    void parseFactList(std::vector<Predicate *> & facts);
+    void parseRuleList(std::vector<Rule *> & rules);
+    void parseQueryList(std::vector<Predicate *> & queries);
 
-    void parseSchemeList();
-    void parseFactList();
-    void parseRuleList();
-    void parseQueryList();
+    Predicate* parseScheme();
+    Predicate* parseFact();
+    Rule* parseRule();
+    Predicate* parseQuery();
 
-    void parseScheme();
-    void parseFact();
-    void parseRule();
-    void parseQuery();
+    Predicate* parseHeadPredicate();
+    Predicate* parsePredicate();
 
-    void parseHeadPredicate();
-    void parsePredicate();
-
-    void parsePredicateList();
-    void parseParameterList();
-    void parseStringList();
-    void parseIdList();
-    void parseParameter();
+    void parsePredicateList(Rule* & rule);
+    void parseParameterList(Predicate* & pred);
+    void parseStringList(Predicate* & pred);
+    void parseIdList(Predicate* & pred);
+    void parseParameter(Predicate* & pred);
 
 };
 #endif //PARSER_H
