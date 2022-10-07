@@ -17,6 +17,19 @@ DatalogProgram* Parser::parseDatalogProgram() {
 
     Predicate* scheme;
 
+//    for(Token* token : tokens){
+//        while(tokens[currToken]->getType() == TokenType::COMMENT){
+//
+//            tokens.erase(tokens.begin() + currToken);
+//
+//        }
+//    }
+
+    for(int i = tokens.size() - 1; i >= 0; i--) {
+        if(tokens[currToken]->getType() == TokenType::COMMENT) {
+            tokens.erase( tokens.begin() + i );
+        }
+    }
 
 
     match(TokenType::SCHEMES);
@@ -248,11 +261,7 @@ std::string Parser::match(TokenType matchTokenType) {
 //    }
 
     //int size = tokens.size();
-    while(tokens[currToken]->getType() == TokenType::COMMENT){
-        
-        tokens.erase(tokens.begin() + currToken);
-       
-    }
+
 
     if(matchTokenType == tokens[currToken]->getType()){
         //size = tokens.size();
