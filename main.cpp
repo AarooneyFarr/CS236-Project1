@@ -24,9 +24,14 @@ int main(int argc, char** argv) {
     lexer->Run(input);
     std::vector<Token*> tokens = lexer->getTokens();
 
+    try{
 
-    std::cout << parser->parse(tokens)->toString() << std::endl;
-
+    
+    std::cout << parser->parse(tokens)->toString();
+    }
+    catch(std::string e){
+        
+    }
 //    for(Token* token : tokens){
 //        std::cout << token->toString() << std::endl;
 //    }

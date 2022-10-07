@@ -53,7 +53,7 @@ std::string DatalogProgram::toString() {
     for(std::string domain : this->domains){
         domains += "  " + domain + "\n";
     }
-    domainsString = "Domains(" + std::to_string(this->domains.size()) + "):\n" + domains;
+    domainsString = "Domain(" + std::to_string(this->domains.size()) + "):\n" + domains;
 
     datalogString = schemesString + factsString + rulesString + queriesString + domainsString;
 

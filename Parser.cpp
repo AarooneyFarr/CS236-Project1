@@ -62,14 +62,17 @@ DatalogProgram* Parser::parse(std::vector<Token*> tokens) {
         return program;
     }
     catch (Token* t) {
-        std::cout << t->toString() << " caused an error!" << std::endl;
+        std::cout << "Failure!" << std::endl;
+        std::cout << "  " << t->toString() << std::endl;
+        std::string fail;
+        throw fail;
     }
 
     return new DatalogProgram();
 }
 
 void Parser::parseSchemeList(std::vector<Predicate *>& schemes) {
-    Token* tester = tokens[currToken];
+    //Token* tester = tokens[currToken];
 
     if(tokens[currToken]->getTypeString() == "ID"){
         schemes.push_back(parseScheme());
@@ -86,7 +89,7 @@ void Parser::parseFactList(std::vector<Predicate *> &facts) {
 }
 
 void Parser::parseRuleList(std::vector<Rule *> &rules) {
-    Token* tester = tokens[currToken];
+    //Token* tester = tokens[currToken];
 
     if(tokens[currToken]->getTypeString() == "ID"){
         rules.push_back(parseRule());
@@ -244,14 +247,19 @@ std::string Parser::match(TokenType matchTokenType) {
 //        std::cout << token->toString() << std::endl;
 //    }
 
-    int size = tokens.size();
+    //int size = tokens.size();
+    while(tokens[currToken]->getType() == TokenType::COMMENT){
+        
+        tokens.erase(tokens.begin() + currToken);
+       
+    }
 
     if(matchTokenType == tokens[currToken]->getType()){
-        size = tokens.size();
+        //size = tokens.size();
         std::string des = tokens[currToken]->getDescription();
-        size = tokens.size();
+       // size = tokens.size();
         currToken++;
-        size = tokens.size();
+        //size = tokens.size();
 
         return des;
     }
