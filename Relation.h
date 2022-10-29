@@ -78,6 +78,20 @@ public:
         return new Relation(name, newColumnNames, tuples);
     };
 
+    string toString(){
+        string relation;
+
+        for(Tuple tuple : tuples){
+            relation += "  ";
+
+            for(int col = 0; col < tuple.getValues().size() - 1 ; col++){
+                relation += columnNames.getValues().at(col) + "=\'" + tuple.getValues().at(col) = "\', ";
+            }
+            relation += columnNames.getValues().at(tuple.getValues().size() - 1) + "=\'" + tuple.getValues().at(tuple.getValues().size() - 1) = "\'\n";
+        }
+
+        return relation;
+    };
     //Join()
 
 
