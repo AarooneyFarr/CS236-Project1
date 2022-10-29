@@ -31,6 +31,16 @@ public:
         this->domains = domains;
     }
 
+    const std::vector<Predicate *> &getSchemes() const;
+
+    const std::vector<Predicate *> &getFacts() const;
+
+    const std::vector<Predicate *> &getQueries() const;
+
+    const std::vector<Rule *> &getRules() const;
+
+    const std::set<std::string> &getDomains() const;
+
 
     std::string toString();
 

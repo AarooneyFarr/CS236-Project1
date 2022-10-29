@@ -9,15 +9,21 @@
 class Parameter{
 private:
     std::string value;
+
+    // 1 - string
+    // 2 - ID
+    int type;
 public:
     Parameter() : Parameter(""){}
 
-    Parameter(std::string value){
+    Parameter(std::string value, int type = 0){
         this->value = value;
+        this->type = type;
     }
 
     std::string toString();
     void setValue(std::string value);
+    int getType() { return type; };
 };
 
 #endif //PARAMETER_H

@@ -19,6 +19,20 @@ public:
     std::string toString();
     void addParam(Parameter* param);
     void addId(std::string idString);
+
+    std::string getId(){ return this->id; }
+
+    std::vector<Parameter*> getParams() { return params; };
+
+    std::vector<std::string> getParamsStringList(){
+        std::vector<std::string> stringParams;
+
+        for (Parameter* param : params){
+            stringParams.push_back(param->toString());
+        }
+        return stringParams;
+    }
+
 };
 
 #endif //PREDICATE_H

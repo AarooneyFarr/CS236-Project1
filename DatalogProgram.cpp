@@ -59,3 +59,23 @@ std::string DatalogProgram::toString() {
 
     return datalogString;
 }
+
+const std::vector<Predicate *> &DatalogProgram::getSchemes() const {
+    return schemes;
+}
+
+const std::vector<Predicate *> &DatalogProgram::getFacts() const {
+    return facts;
+}
+
+const std::vector<Predicate *> &DatalogProgram::getQueries() const {
+    return queries;
+}
+
+const std::vector<Rule *> &DatalogProgram::getRules() const {
+    return rules;
+}
+
+const std::set<std::string> &DatalogProgram::getDomains() const {
+    return domains;
+}

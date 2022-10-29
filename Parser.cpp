@@ -248,11 +248,11 @@ void Parser::parseIdList(Predicate* &pred) {
 void Parser::parseParameter(Predicate* &pred) {
 
     if(tokens[currToken]->getTypeString() == "STRING"){
-        pred->addParam(new Parameter(match(TokenType::STRING)));
+        pred->addParam(new Parameter(match(TokenType::STRING),1));
     }
     else if(tokens[currToken]->getTypeString() == "ID")
     {
-        pred->addParam(new Parameter(match(TokenType::ID)));
+        pred->addParam(new Parameter(match(TokenType::ID),2));
     }
     else{
         throw tokens[currToken];
