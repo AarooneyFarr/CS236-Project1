@@ -27,7 +27,7 @@ public:
         else{
             cout << "Relation " << relationName << " not found" << endl;
         }
-
+        return new Relation();
     };
 
     Relation* getRelationCopy(std::string relationName) {
@@ -40,6 +40,8 @@ public:
         else{
             cout << "Relation " << relationName << " not found" << endl;
         }
+
+        return new Relation();
     };
 
 };

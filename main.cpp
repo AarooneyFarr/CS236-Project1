@@ -5,50 +5,50 @@
 #include <iostream>
 #include <fstream>
 
-int main(int argc, char** argv) {
+int main(int argc, char **argv)
+{
 
-    Lexer* lexer = new Lexer();
-    Parser* parser = new Parser();
-
+    Lexer *lexer = new Lexer();
+    Parser *parser = new Parser();
 
     std::string input = "";
 
     std::string filename = argv[1];
 
     std::ifstream myFile(filename);
-    if(myFile.is_open()){
-        while(myFile.peek() != EOF){
+    if (myFile.is_open())
+    {
+        while (myFile.peek() != EOF)
+        {
             char next = myFile.get();
             input = input + next;
         }
     }
 
     lexer->Run(input);
-    std::vector<Token*> tokens = lexer->getTokens();
+    std::vector<Token *> tokens = lexer->getTokens();
 
-    try{
+    try
+    {
 
-//    std::cout << parser->parse(tokens)->toString();
+        //    std::cout << parser->parse(tokens)->toString();
 
-    //Interpreter* interp = new Interpreter(parser->parse(tokens));
-    //interp->run();
+        Interpreter *interp = new Interpreter(parser->parse(tokens));
+        interp->run();
     }
-    catch(std::string e){
-
+    catch (std::string e)
+    {
     }
-//
-//    for(Token* token : tokens){
-//        std::cout << token->toString() << std::endl;
-//    }
+    //
+    //    for(Token* token : tokens){
+    //        std::cout << token->toString() << std::endl;
+    //    }
 
-//    std::string count = "Total Tokens = " + std::to_string(tokens.size());
-//    std::cout << count;
+    //    std::string count = "Total Tokens = " + std::to_string(tokens.size());
+    //    std::cout << count;
 
-
-
-
-    //delete lexer;
-    //delete parser;
+    // delete lexer;
+    // delete parser;
 
     return 0;
 }
