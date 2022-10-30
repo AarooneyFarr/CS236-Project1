@@ -83,12 +83,19 @@ public:
 
         for(Tuple tuple : tuples){
             relation += "  ";
+            int iter = tuple.getValues().size();
 
             for (long unsigned int col = 0; col < tuple.getValues().size() - 1; col++)
             {
-                relation += columnNames.getValues().at(col) + "=\'" + tuple.getValues().at(col) = "\', ";
+                string one = columnNames.getValues().at(col);
+                string two = tuple.getValues().at(col);
+
+                relation += columnNames.getValues().at(col) + "=" + tuple.getValues().at(col) + ", ";
             }
-            relation += columnNames.getValues().at(tuple.getValues().size() - 1) + "=\'" + tuple.getValues().at(tuple.getValues().size() - 1) = "\'\n";
+            string id = columnNames.getValues().at(tuple.getValues().size() - 1);
+            string dummyVars = tuple.getValues().at(tuple.getValues().size() - 1);
+            string finalString =  id + "=" + dummyVars + "\n";
+            relation += finalString;
         }
 
         return relation;

@@ -59,7 +59,7 @@ DatalogProgram* Parser::parse(std::vector<Token*> tokens) {
     try{
         this->tokens = tokens;
         this->program = parseDatalogProgram();
-        std::cout << "Success!" << std::endl;
+        //std::cout << "Success!" << std::endl;
         //std::string tester =  program->toString();
 
         return program;

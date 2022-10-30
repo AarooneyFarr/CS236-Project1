@@ -97,8 +97,12 @@ public:
         if(copyRelation->getTuples().empty()){
             headerString += "No\n";
         }
+        else if(variables.empty()){
+            headerString += "Yes(" + to_string(copyRelation->getTuples().size()) + ")\n";
+
+        }
         else{
-            headerString += "Yes(" + to_string(copyRelation->getTuples().size()) + ")";
+            headerString += "Yes(" + to_string(copyRelation->getTuples().size()) + ")\n";
             extra = copyRelation->toString();
         }
 
