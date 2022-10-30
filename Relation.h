@@ -83,7 +83,6 @@ public:
 
         for(Tuple tuple : tuples){
             relation += "  ";
-            int iter = tuple.getValues().size();
 
             for (long unsigned int col = 0; col < tuple.getValues().size() - 1; col++)
             {
