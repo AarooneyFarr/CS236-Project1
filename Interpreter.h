@@ -33,10 +33,7 @@ public:
     //void InterpretRules();
     void InterpretQueries() {
         for (Predicate* query : program.getQueries()) {
-            Relation* copyRelation = evaluatePredicate(query);
-
-
-
+            evaluatePredicate(query);
         }
 
 
@@ -51,10 +48,10 @@ public:
         vector<string> variables;
 
         bool alreadyExists = false;
-        int prevIt = 0;
 
         //Run all selects
-        for(int i = 0; i < query->getParams().size(); i++){
+        for (long unsigned int i = 0; i < query->getParams().size(); i++)
+        {
             int queryType = query->getParams().at(i)->getType();
             string paramValue = query->getParamsStringList().at(i);
 

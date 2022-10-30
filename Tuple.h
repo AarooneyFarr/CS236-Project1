@@ -19,6 +19,18 @@ public:
         this->rowValues = rowValues;
     }
 
+    bool operator<(const Tuple &otherTuple) const
+    {
+        if (rowValues < otherTuple.rowValues)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     vector<string> getValues(){ return rowValues; }
 };
 
