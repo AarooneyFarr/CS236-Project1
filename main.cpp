@@ -10,6 +10,7 @@ int main(int argc, char** argv) {
     Lexer* lexer = new Lexer();
     Parser* parser = new Parser();
 
+
     std::string input = "";
 
     std::string filename = argv[1];
@@ -27,18 +28,24 @@ int main(int argc, char** argv) {
 
     try{
 
-    
-    std::cout << parser->parse(tokens)->toString();
+//    std::cout << parser->parse(tokens)->toString();
+
+    //Interpreter* interp = new Interpreter(parser->parse(tokens));
+    //interp->run();
     }
     catch(std::string e){
-        
+
     }
+//
 //    for(Token* token : tokens){
 //        std::cout << token->toString() << std::endl;
 //    }
 
 //    std::string count = "Total Tokens = " + std::to_string(tokens.size());
 //    std::cout << count;
+
+
+
 
     //delete lexer;
     //delete parser;

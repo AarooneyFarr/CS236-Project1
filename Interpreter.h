@@ -9,30 +9,37 @@
 
 class Interpreter{
 private:
-    DatalogProgram program;
+    DatalogProgram* program;
     Database database;
 
 public:
-    Interpreter(DatalogProgram program) {
+    Interpreter(DatalogProgram* program) {
         this->program = program;
     }
 
+    void run(){
+        InterpretSchemes();
+        InterpretFacts();
+
+        InterpretQueries();
+    }
+
     void InterpretSchemes() {
-        for (Predicate* scheme : program.getSchemes()){
+        for (Predicate* scheme : program->getSchemes()){
             Relation* newRelation = new Relation(scheme->getId(), Header(scheme->getParamsStringList()));
             database.addRelation(newRelation);
         }
     }
 
     void InterpretFacts() {
-        for (Predicate* fact : program.getFacts()) {
+        for (Predicate* fact : program->getFacts()) {
             database.getRelation(fact->getId())->addTuple(Tuple(fact->getParamsStringList()));
         }
     }
 
     //void InterpretRules();
     void InterpretQueries() {
-        for (Predicate* query : program.getQueries()) {
+        for (Predicate* query : program->getQueries()) {
             evaluatePredicate(query);
         }
 
