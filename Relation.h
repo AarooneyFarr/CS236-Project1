@@ -34,7 +34,7 @@ public:
 
     Relation* select1(int columnIndex, string value) {
         set<Tuple> newTuples;
-        for (Tuple tuple : tuples){
+        for (const Tuple& tuple : tuples){
             if(tuple.getValues().at(columnIndex) == value){
                 newTuples.insert(tuple);
             }
@@ -45,7 +45,7 @@ public:
 
     Relation* select2(int columnIndex1, int columnIndex2) {
         set<Tuple> newTuples;
-        for (Tuple tuple : tuples){
+        for (const Tuple& tuple : tuples){
             if(tuple.getValues().at(columnIndex1) == tuple.getValues().at(columnIndex2)){
                 newTuples.insert(tuple);
             }
@@ -63,7 +63,7 @@ public:
             newColumnNames.push_back(columnNames.getValues().at(column));
         }
 
-        for (Tuple tuple : tuples){
+        for (const Tuple& tuple : tuples){
             vector<string> newTupleValues;
             for(int column : columnsToProject){
                 newTupleValues.push_back(tuple.getValues().at(column));
@@ -89,7 +89,7 @@ public:
     string toString(){
         string relation;
 
-        for(Tuple tuple : tuples){
+        for(const Tuple& tuple : tuples){
             relation += "  ";
 
             for (long unsigned int col = 0; col < tuple.getValues().size() - 1; col++)
@@ -163,7 +163,7 @@ public:
         int newSize;
         Relation* addedStuff = new Relation(name, columnNames, {});
 
-        for(Tuple tuple : other->getTuples()){
+        for(const Tuple& tuple : other->getTuples()){
             addTuple(tuple);
             newSize = this->getTuples().size();
             if(size != newSize){
@@ -180,7 +180,7 @@ public:
             cout << value << " ";
         }
         cout << endl;
-        for(Tuple tuple : tuples){
+        for(const Tuple& tuple : tuples){
             for(string value : tuple.getValues()){
                 cout << value << " ";
             }
