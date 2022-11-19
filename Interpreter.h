@@ -63,9 +63,11 @@ public:
                         }
                     }
                     else {
-                        f1 = database.getRelationCopy(rule->getPredicates().at(0)->getId());
+                        //f1 = database.getRelationCopy(rule->getPredicates().at(0)->getId());
+                        f1 = evaluateRulePredicate(rule->getPredicates().at(0));
 
                         f1 = f1->rename(rule->getPredicates().at(0)->getParamsStringList());
+
 
                     }
 
@@ -205,6 +207,54 @@ public:
         }
 
         cout << headerString << extra;
+
+        return copyRelation;
+    };
+
+    Relation* evaluateRulePredicate(Predicate* query){
+        Relation* copyRelation = database.getRelationCopy(query->getId());
+
+        map<string,int> trackerMap;
+        vector<int> firstIndex;
+        vector<string> variables;
+
+        bool alreadyExists = false;
+
+        //Run all selects
+        for (long unsigned int i = 0; i < query->getParams().size(); i++)
+        {
+            int queryType = query->getParams().at(i)->getType();
+            string paramValue = query->getParamsStringList().at(i);
+
+            //If parameter is a string/constant
+            if(queryType == 1){
+                copyRelation = copyRelation->select1(i,query->getParamsStringList().at(i));
+                continue;
+            }
+
+            //Check if we have seen ID/variable before
+            for(string id : variables){
+                alreadyExists = (id == query->getParamsStringList().at(i)) ? true : alreadyExists;
+            }
+
+            //If parameter is an ID/variable
+            if(queryType == 2 && alreadyExists){
+                copyRelation = copyRelation->select2(trackerMap[paramValue],i);
+            }
+            else if(queryType == 2){
+                //Variable is new so add it to tracker lists
+                variables.push_back(paramValue);
+                firstIndex.push_back(i);
+                trackerMap[paramValue] = i;
+            }
+
+            alreadyExists = false;
+        }
+
+        copyRelation = copyRelation->project(firstIndex);
+        copyRelation = copyRelation->rename(variables);
+
+        //copyRelation->print();
 
         return copyRelation;
     };
