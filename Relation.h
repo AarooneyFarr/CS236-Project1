@@ -75,7 +75,10 @@ public:
     };
 
     Relation* rename(vector<string> newColumnNames){
-        return new Relation(name, newColumnNames, tuples);
+        Relation* newRelation = new Relation(name, newColumnNames, tuples);
+
+
+        return newRelation;
     };
 
     string toString(){
@@ -100,13 +103,7 @@ public:
         return relation;
     };
 
-    Relation* concat(Relation* other){
-        set<Tuple> newTuples;
-
-
-    }
-
-    Relation* Join(Relation* other){
+    Relation* join(Relation* other){
         set<Tuple> newTuples;
         Header newHeader;
         newHeader.addValues(columnNames.getValues());
@@ -124,6 +121,7 @@ public:
                     match.push_back(j);
                     matchIndices.push_back(match);
 
+                    //TODO verify this works
                     newHeader.setValue(size + j, "dup" + other->columnNames.getValues().at(j));
 
                 }
@@ -152,6 +150,26 @@ public:
         return new Relation(name, newHeader, newTuples);
     }
 
+    Relation* concat(Relation* other){
+        for(Tuple tuple : other->getTuples()){
+            addTuple(tuple);
+        }
+
+        return this;
+    };
+
+    void print(){
+        for(string value : columnNames.getValues()){
+            cout << value << " ";
+        }
+        cout << endl;
+        for(Tuple tuple : tuples){
+            for(string value : tuple.getValues()){
+                cout << value << " ";
+            }
+            cout << endl;
+        }
+    }
 
 };
 

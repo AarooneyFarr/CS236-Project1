@@ -44,5 +44,31 @@ public:
         return new Relation();
     };
 
+    void print(){
+        for(pair<string, Relation*> relation: relations){
+            for(string value : relation.second->getHeader().getValues()){
+                cout << value << " ";
+            }
+            cout << endl;
+            for(Tuple tuple : relation.second->getTuples()){
+                for(string value : tuple.getValues()){
+                    cout << value << " ";
+                }
+                cout << endl;
+            }
+        }
+    }
+
+    int getSize(){
+        int size = 0;
+        for(pair<string, Relation*> relation : relations){
+            for(Tuple tuple : relation.second->getTuples()){
+                size ++;
+            }
+        }
+
+        return size;
+    }
+
 };
 #endif //DATABASE_H

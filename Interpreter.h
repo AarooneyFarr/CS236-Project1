@@ -20,8 +20,8 @@ public:
     void run(){
         InterpretSchemes();
         InterpretFacts();
-
-        //InterpretQueries();
+        InterpretRules();
+        InterpretQueries();
     }
 
     void InterpretSchemes() {
@@ -37,10 +37,83 @@ public:
         }
     }
 
-    //void InterpretRules();
+
+
+    void InterpretRules(){
+        int ogDataSize = database.getSize();
+        int newDataSize = ogDataSize + 1;
+        int runThroughCount = 0;
+
+        while(ogDataSize != newDataSize) {
+            ogDataSize = database.getSize();
+
+            for (Rule *rule : program->getRules()) {
+                    string headId = rule->getHead()->getId();
+                    int predCount = rule->getPredicates().size();
+                    Relation *f1;
+
+                    //Join all predicates
+                    if (predCount > 1) {
+                        f1 = runTwo(rule->getPredicates().at(predCount - 2), rule->getPredicates().at(predCount - 1));
+                        predCount--;
+
+                        while (predCount > 1) {
+                            f1 = runTwo(f1, rule->getPredicates().at(predCount - 2));
+                            predCount--;
+                        }
+                    }
+                    else {
+                        f1 = database.getRelationCopy(rule->getPredicates().at(0)->getId());
+                        f1->rename(rule->getPredicates().at(0)->getParamsStringList());
+                    }
+
+                    //Project new Relation
+                    vector<int> newColumns;
+
+                    for (string param : rule->getHead()->getParamsStringList()) {
+                        for (int i = 0; i < f1->getHeader().getValues().size(); i++) {
+
+                            if (param == f1->getHeader().getValues().at(i)) {
+                                newColumns.push_back(i);
+
+                            }
+                        }
+                    }
+                    Relation *f2 = f1->project(newColumns);
+
+                    //Rename new Relation to match database
+                    Relation *f3 = f2->rename(database.getRelation(headId)->getHeader().getValues());
+
+                    //Concat new data to OG database relation
+                    database.getRelation(headId)->concat(f3);
+            }
+            newDataSize = database.getSize();
+            runThroughCount++;
+        }
+    };
+
+    Relation* runTwo(Predicate* p1, Predicate* p2){
+        Relation* r1 = database.getRelationCopy(p1->getId());
+        Relation* r2 = database.getRelationCopy(p2->getId());
+
+        r1 = r1->rename(p1->getParamsStringList());
+        r2 = r2->rename(p2->getParamsStringList());
+
+        return r1->join(r2);
+    };
+
+    Relation* runTwo(Relation* r1, Predicate* p2){
+        Relation* r2 = database.getRelationCopy(p2->getId());
+
+        r2 = r2->rename(p2->getParamsStringList());
+
+        return r1->join(r2);
+    };
 
 
     void InterpretQueries() {
+
+
         for (Predicate* query : program->getQueries()) {
             evaluatePredicate(query);
         }

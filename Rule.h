@@ -21,6 +21,9 @@ public:
     void setHeadPredicate(Predicate* headPredicate);
     void addPredicate(Predicate* predicate);
 
+    Predicate* getHead() { return headPredicate; }
+    std::vector<Predicate*> getPredicates() { return predicates; }
+
 
 };
 
