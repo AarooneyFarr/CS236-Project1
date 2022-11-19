@@ -64,7 +64,9 @@ public:
                     }
                     else {
                         f1 = database.getRelationCopy(rule->getPredicates().at(0)->getId());
-                        f1->rename(rule->getPredicates().at(0)->getParamsStringList());
+
+                        f1 = f1->rename(rule->getPredicates().at(0)->getParamsStringList());
+
                     }
 
                     //Project new Relation
@@ -72,7 +74,7 @@ public:
 
                     for (string param : rule->getHead()->getParamsStringList()) {
                         for (long unsigned int i = 0; i < f1->getHeader().getValues().size(); i++) {
-
+                            //cout << param << " == " << f1->getHeader().getValues().at(i) << endl;
                             if (param == f1->getHeader().getValues().at(i)) {
                                 newColumns.push_back(i);
 
@@ -97,6 +99,7 @@ public:
 
                     }
                     else {
+
                         extra = newStuff->toString();
                     }
 
