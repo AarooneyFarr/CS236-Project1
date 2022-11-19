@@ -31,7 +31,7 @@ public:
         }
     }
 
-    vector<string> getValues(){ return rowValues; }
+    vector<string> getValues() const { return rowValues; }
 
     void addValues(vector<string> newValues){ rowValues.insert(rowValues.end(), newValues.begin(), newValues.end()); }
 };
