@@ -54,11 +54,11 @@ public:
 
                     //Join all predicates
                     if (predCount > 1) {
-                        f1 = runTwo(rule->getPredicates().at(predCount - 2), rule->getPredicates().at(predCount - 1));
+                        f1 = runTwo(evaluateRulePredicate(rule->getPredicates().at(predCount - 2)), evaluateRulePredicate(rule->getPredicates().at(predCount - 1)));
                         predCount--;
 
                         while (predCount > 1) {
-                            f1 = runTwo(f1, rule->getPredicates().at(predCount - 2));
+                            f1 = runTwo(f1, evaluateRulePredicate(rule->getPredicates().at(predCount - 2)));
                             predCount--;
                         }
                     }
@@ -133,6 +133,10 @@ public:
 
         r2 = r2->rename(p2->getParamsStringList());
 
+        return r1->join(r2);
+    };
+
+    Relation* runTwo(Relation* r1, Relation* r2){
         return r1->join(r2);
     };
 
