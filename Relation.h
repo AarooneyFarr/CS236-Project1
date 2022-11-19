@@ -99,7 +99,58 @@ public:
 
         return relation;
     };
-    //Join()
+
+    Relation* concat(Relation* other){
+        set<Tuple> newTuples;
+
+
+    }
+
+    Relation* Join(Relation* other){
+        set<Tuple> newTuples;
+        Header newHeader;
+        newHeader.addValues(columnNames.getValues());
+        newHeader.addValues(other->columnNames.getValues());
+        int size = columnNames.getValues().size();
+        vector<vector<int>> matchIndices;
+        bool concatTuple = true;
+
+        //get match index values from the headers
+        for (int i = 0; i < columnNames.getValues().size(); i++){
+            for (int j = 0; j < other->columnNames.getValues().size(); j++){
+                if(columnNames.getValues().at(i) == other->columnNames.getValues().at(j)){
+                    vector<int> match;
+                    match.push_back(i);
+                    match.push_back(j);
+                    matchIndices.push_back(match);
+
+                    newHeader.setValue(size + j, "dup" + other->columnNames.getValues().at(j));
+
+                }
+            }
+        }
+
+        //loop through the tuples on both tables to check for equality and add a new concat tuple if there is a full match
+        for (Tuple homeTuple : tuples){
+            Tuple newTuple;
+            newTuple.addValues(homeTuple.getValues());
+
+            for(Tuple otherTuple : other->tuples){
+                for(vector<int> indexPair : matchIndices) {
+                    if (homeTuple.getValues().at(indexPair.at(0)) != otherTuple.getValues().at(indexPair.at(1))) {
+                        concatTuple = false;
+                    }
+                }
+                if(concatTuple){
+                     newTuple.addValues(otherTuple.getValues());
+                     newTuples.insert(newTuple);
+                }
+                concatTuple = true;
+            }
+        }
+
+        return new Relation(name, newHeader, newTuples);
+    }
 
 
 };

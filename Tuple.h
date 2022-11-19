@@ -32,6 +32,8 @@ public:
     }
 
     vector<string> getValues(){ return rowValues; }
+
+    void addValues(vector<string> newValues){ rowValues.insert(rowValues.end(), newValues.begin(), newValues.end()); }
 };
 
 #endif //TUPLE_H

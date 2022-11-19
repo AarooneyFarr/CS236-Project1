@@ -21,7 +21,7 @@ public:
         InterpretSchemes();
         InterpretFacts();
 
-        InterpretQueries();
+        //InterpretQueries();
     }
 
     void InterpretSchemes() {
@@ -38,6 +38,8 @@ public:
     }
 
     //void InterpretRules();
+
+
     void InterpretQueries() {
         for (Predicate* query : program->getQueries()) {
             evaluatePredicate(query);

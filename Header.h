@@ -20,5 +20,9 @@ public:
     }
 
     vector<string> getValues(){ return columnNames; }
+
+    void addValue(string value){ columnNames.push_back(value);}
+    void addValues(vector<string> newValues){ columnNames.insert(columnNames.end(), newValues.begin(), newValues.end()); }
+    void setValue(int i, string value){ columnNames.at(i) = value; }
 };
 #endif //HEADER_H
