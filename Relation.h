@@ -30,6 +30,10 @@ public:
     Header getHeader() { return columnNames; }
     set<Tuple> getTuples() { return tuples; }
 
+    void setName(string name){ this->name = name; }
+    void setHeader(Header header) { this->columnNames = header; }
+    void setTuples(set<Tuple> tuples) { this->tuples = tuples;  }
+
     void addTuple(Tuple newTuple) { tuples.insert(newTuple); }
 
     Relation* select1(int columnIndex, string value) {
@@ -40,7 +44,9 @@ public:
             }
         }
 
-        return new Relation(name, columnNames, newTuples);
+        setTuples(newTuples);
+
+        return this;
     };
 
     Relation* select2(int columnIndex1, int columnIndex2) {
@@ -51,7 +57,9 @@ public:
             }
         }
 
-        return new Relation(name, columnNames, newTuples);
+        setTuples(newTuples);
+
+        return this;
     };
 
     Relation* project(vector<int> columnsToProject) {
@@ -71,19 +79,17 @@ public:
             newTuples.insert(Tuple(newTupleValues));
         }
 
-        Relation* newRelation = new Relation(name, newColumnNames, newTuples);
+        setHeader(newColumnNames);
+        setTuples(newTuples);
 
-//        this->print();
-//        newRelation->print();
 
-        return newRelation;
+        return this;
     };
 
     Relation* rename(vector<string> newColumnNames){
-        Relation* newRelation = new Relation(name, newColumnNames, tuples);
+        setHeader(newColumnNames);
 
-
-        return newRelation;
+        return this;
     };
 
     string toString(){
@@ -154,8 +160,10 @@ public:
                 concatTuple = true;
             }
         }
+        setHeader(newHeader);
+        setTuples(newTuples);
 
-        return new Relation(name, newHeader, newTuples);
+        return this;
     }
 
     Relation* concat(Relation* other){
