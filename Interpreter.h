@@ -37,12 +37,12 @@ public:
         }
     }
 
-
-
     void InterpretRules(){
         int ogDataSize = database.getSize();
         int newDataSize = ogDataSize + 1;
         int runThroughCount = 0;
+
+        cout << "Rule Evaluation" << endl;
 
         while(ogDataSize != newDataSize) {
             ogDataSize = database.getSize();
@@ -85,11 +85,32 @@ public:
                     Relation *f3 = f2->rename(database.getRelation(headId)->getHeader().getValues());
 
                     //Concat new data to OG database relation
-                    database.getRelation(headId)->concat(f3);
+                    Relation* newStuff = database.getRelation(headId)->concat(f3);
+
+                    //print evaluation
+
+                    string headerString = rule->toString() + ".";
+                    string extra;
+
+                    //Check if there is anything to return
+                    if (newStuff->getTuples().empty()) {
+
+                    }
+                    else {
+                        extra = newStuff->toString();
+                    }
+
+                    cout << headerString << endl << extra;
+
             }
             newDataSize = database.getSize();
             runThroughCount++;
         }
+
+        cout << endl << "Schemes populated after " << runThroughCount << " passes through the Rules." << endl << endl << "Query Evaluation" << endl;
+
+
+
     };
 
     Relation* runTwo(Predicate* p1, Predicate* p2){
@@ -109,7 +130,6 @@ public:
 
         return r1->join(r2);
     };
-
 
     void InterpretQueries() {
 

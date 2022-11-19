@@ -71,7 +71,12 @@ public:
             newTuples.insert(Tuple(newTupleValues));
         }
 
-        return new Relation(name, newColumnNames, newTuples);
+        Relation* newRelation = new Relation(name, newColumnNames, newTuples);
+
+//        this->print();
+//        newRelation->print();
+
+        return newRelation;
     };
 
     Relation* rename(vector<string> newColumnNames){
@@ -121,7 +126,6 @@ public:
                     match.push_back(j);
                     matchIndices.push_back(match);
 
-                    //TODO verify this works
                     newHeader.setValue(size + j, "dup" + other->columnNames.getValues().at(j));
 
                 }
@@ -140,8 +144,12 @@ public:
                     }
                 }
                 if(concatTuple){
+                    Tuple copyTuple;
+                    copyTuple.addValues(newTuple.getValues());
+
                      newTuple.addValues(otherTuple.getValues());
                      newTuples.insert(newTuple);
+                     newTuple = copyTuple;
                 }
                 concatTuple = true;
             }
@@ -151,11 +159,20 @@ public:
     }
 
     Relation* concat(Relation* other){
+        int size = this->getTuples().size();
+        int newSize;
+        Relation* addedStuff = new Relation(name, columnNames, {});
+
         for(Tuple tuple : other->getTuples()){
             addTuple(tuple);
+            newSize = this->getTuples().size();
+            if(size != newSize){
+                addedStuff->addTuple(tuple);
+            }
+            size = this->getTuples().size();
         }
 
-        return this;
+        return addedStuff;
     };
 
     void print(){
