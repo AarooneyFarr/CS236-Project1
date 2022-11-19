@@ -71,7 +71,7 @@ public:
                     vector<int> newColumns;
 
                     for (string param : rule->getHead()->getParamsStringList()) {
-                        for (int i = 0; i < f1->getHeader().getValues().size(); i++) {
+                        for (long unsigned int i = 0; i < f1->getHeader().getValues().size(); i++) {
 
                             if (param == f1->getHeader().getValues().at(i)) {
                                 newColumns.push_back(i);

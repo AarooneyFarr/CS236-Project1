@@ -1,5 +1,5 @@
 NUM?=4
-numbers=40 44 45 46 47 48 49 54 55 61 62
+numbers=40 44 45 46 47 48 49 54 
 tests=project$(NUM)-exampleIO
 
 run:

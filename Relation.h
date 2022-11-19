@@ -118,8 +118,8 @@ public:
         bool concatTuple = true;
 
         //get match index values from the headers
-        for (int i = 0; i < columnNames.getValues().size(); i++){
-            for (int j = 0; j < other->columnNames.getValues().size(); j++){
+        for (long unsigned int i = 0; i < columnNames.getValues().size(); i++){
+            for (long unsigned int j = 0; j < other->columnNames.getValues().size(); j++){
                 if(columnNames.getValues().at(i) == other->columnNames.getValues().at(j)){
                     vector<int> match;
                     match.push_back(i);
