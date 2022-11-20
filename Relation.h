@@ -139,23 +139,23 @@ public:
         }
 
         //loop through the tuples on both tables to check for equality and add a new concat tuple if there is a full match
-        for(const Tuple& homeTuple : tuples){
-            Tuple newTuple;
-            newTuple.addValues(homeTuple.getValues());
-
+        for (const Tuple &homeTuple : tuples)
+        {
             for(const Tuple& otherTuple : other->tuples){
                 for(vector<int> indexPair : matchIndices) {
-                    if (homeTuple.getValues().at(indexPair.at(0)) != otherTuple.getValues().at(indexPair.at(1))) {
+                    if (homeTuple.getValue(indexPair.at(0)) != otherTuple.getValue(indexPair.at(1)))
+                    {
                         concatTuple = false;
                     }
                 }
                 if(concatTuple){
-                    Tuple copyTuple;
-                    copyTuple.addValues(newTuple.getValues());
+                    Tuple newTuple;
 
-                     newTuple.addValues(otherTuple.getValues());
-                     newTuples.insert(newTuple);
-                     newTuple = copyTuple;
+                    newTuple.addValues(homeTuple.getValues());
+                    newTuple.addValues(otherTuple.getValues());
+
+                    newTuples.insert(newTuple);
+                    newTuple = homeTuple;
                 }
                 concatTuple = true;
             }

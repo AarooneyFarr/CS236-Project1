@@ -32,6 +32,7 @@ public:
     }
 
     vector<string> getValues() const { return rowValues; }
+    string getValue(int index) const { return rowValues.at(index); }
 
     void addValues(vector<string> newValues){ rowValues.insert(rowValues.end(), newValues.begin(), newValues.end()); }
 };
