@@ -32,6 +32,7 @@ public:
     void setAdjNodes(vector<int> nodes){ this->adjacentNodes = nodes; }
 
     void addAdjNode(int nodeId){ this->adjacentNodes.insert(nodeId); }
+    int getFirstAdj() { return *(this->adjacentNodes.begin()); }
 
 
 };

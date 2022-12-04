@@ -18,11 +18,15 @@ private:
 
 public:
     void dfsForest(){
-
+        for(Node* : revAdjList){
+            if(node->isVisited == false){
+                
+            }
+        }
     }
 
     void dfsForest(vector<int> postOrder){
-
+        
     }
 
     void populateReverseGraph(){
