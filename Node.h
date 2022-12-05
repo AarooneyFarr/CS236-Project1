@@ -46,6 +46,10 @@ public:
         this->sink = false;
     }
 
+    void addAdjNodes(set<int> newNodes){
+        adjacentNodes.insert(newNodes.begin(), newNodes.end());
+    }
+
     int getFirstAdj() { return *(this->adjacentNodes.begin()); }
 
 

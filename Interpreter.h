@@ -6,6 +6,7 @@
 #define INTERPRETER_H
 #include "DatalogProgram.h"
 #include "Database.h"
+#include "Graph.h"
 
 class Interpreter{
 private:
@@ -41,6 +42,9 @@ public:
         int ogDataSize = database.getSize();
         int newDataSize = ogDataSize + 1;
         int runThroughCount = 0;
+
+        Graph graph;
+        vector<vector<int>> sccList = graph.runGraphOptimization(program->getRules());
 
         cout << "Rule Evaluation" << endl;
 

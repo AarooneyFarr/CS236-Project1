@@ -5,9 +5,11 @@
 #ifndef PROJECT1_STARTER_CODE_GRAPH_H
 #define PROJECT1_STARTER_CODE_GRAPH_H
 
-#include <vector>;
+#include <vector>
 #include <algorithm>
+#include <map>
 #include "Node.h"
+#include "Rule.h"
 
 using namespace std;
 
@@ -20,7 +22,6 @@ private:
     vector<int> preOrder;
     vector<vector<int>> sccList;
 
-public:
     void dfsForest(){
         for(Node* node: revAdjList){
             if(node->isVisited() == false){
@@ -76,6 +77,57 @@ public:
 
         }
     }
+
+public:
+    Graph() = default;
+
+    vector<vector<int>> runGraphOptimization(vector<Rule*> rules){
+        /**
+         * Each index corresponds to a rule # and contains a list (including the current rule index)
+         * of all of the other rules with the same name
+         */
+        vector<vector<int>> ruleNames;
+        //TODO delete ^^ if map works
+        map<string, set<int>> ruleMap;
+
+        //Populate ruleNames
+        for(int i = 0; i < rules.size(); i++){
+            vector<int> otherRules;
+            set<int> mapRules;
+
+            for(int j = 0; j < rules.size(); j++){
+                if(rules.at(i)->getHead()->getId() == rules.at(j)->getHead()->getId()){
+                    otherRules.push_back(j);
+                    mapRules.insert(j);
+                }
+            }
+
+            ruleNames.push_back(otherRules);
+            ruleMap[rules.at(i)->getHead()->getId()] = mapRules;
+        }
+
+        //Add each rule as a node
+        for(int i = 0; i<rules.size(); i++){
+            adjList.push_back(new Node(i));
+        }
+
+        //Add adjacency to nodes - loop through rules
+        for(int i = 0; i < rules.size(); i++){
+            //Loop through each predicate in rule and add adjNodes
+            for(Predicate* pred : rules.at(i)->getPredicates()){
+                adjList.at(i)->addAdjNodes(ruleMap.at(pred->getId()));
+            }
+        }
+
+        //Run algorithms
+        populateReverseGraph();
+        dfsForest();
+        dfsForestPostOrder();
+
+        return sccList;
+    }
+
+
 
 };
 
