@@ -25,16 +25,29 @@ private:
     void dfsForest(){
         for(Node* node: revAdjList){
             if(node->isVisited() == false){
+
+                //add first node to tree
                 vector<int> newGrouping;
+                node->setVisited(true);
                 newGrouping.push_back(node->getId());
-                Node* nextNode = revAdjList.at(node->getFirstAdj());
+                //node->printNode();
 
-                while(nextNode->hasAdjNode() && nextNode->isVisited() == false){
+                //add any additional nodes
+                if(node->getNextAdj(revAdjList) != -1) {
+                    Node *nextNode = revAdjList.at(node->getNextAdj(revAdjList));
+                    nextNode->setVisited(true);
                     newGrouping.push_back(nextNode->getId());
-                    nextNode = revAdjList.at(nextNode->getFirstAdj());
-                }
+                    //nextNode->printNode();
 
-                reverse(newGrouping.begin(), newGrouping.end());
+                    while (nextNode->getNextAdj(revAdjList) != -1) {
+                        nextNode = revAdjList.at(nextNode->getNextAdj(revAdjList));
+                        nextNode->setVisited(true);
+                        newGrouping.push_back(nextNode->getId());
+                        //nextNode->printNode();
+                    }
+
+                    reverse(newGrouping.begin(), newGrouping.end());
+                }
 
                 for(int nodeId : newGrouping){
                     postOrder.push_back(nodeId);
@@ -52,30 +65,77 @@ private:
 
             if(node->isVisited() == false){
                 vector<int> newGrouping;
+                node->setVisited(true);
                 newGrouping.push_back(node->getId());
-                Node* nextNode = adjList.at(node->getFirstAdj());
+                //node->printNode();
 
-                while(nextNode->hasAdjNode() && nextNode->isVisited() == false){
+                //add any additional nodes
+                if(node->getNextAdj(adjList) != -1) {
+                    Node *nextNode = adjList.at(node->getNextAdj(adjList));
+                    nextNode->setVisited(true);
                     newGrouping.push_back(nextNode->getId());
-                    nextNode = adjList.at(nextNode->getFirstAdj());
-                }
+                    //nextNode->printNode();
 
+                    while (nextNode->getNextAdj(adjList) != -1) {
+                        nextNode = adjList.at(nextNode->getNextAdj(adjList));
+                        nextNode->setVisited(true);
+                        newGrouping.push_back(nextNode->getId());
+                        //nextNode->printNode();
+                    }
+                }
                 sccList.push_back(newGrouping);
             }
         }
     }
 
+    void printNodesR(){
+        for(Node* node : revAdjList){
+            node->printNode();
+        }
+    }
+
+    void printNodesInfo(){
+        for(Node* node : adjList){
+            node->printNodeInfo();
+        }
+    }
+
+    void printSCC(){
+        for(vector<int> vec : sccList){
+            for(int i : vec){
+                cout << i << " ";
+            }
+            cout << endl;
+        }
+    }
+
+    void printMap(map<string, set<int>> ruleMap){
+        for(const auto &p : ruleMap){
+            cout << p.first << ": ";
+            for(int i : p.second){
+                cout << i << " ";
+            }
+            cout << endl;
+        }
+    }
+
     void populateReverseGraph(){
         for(Node* node : adjList){
-            revAdjList.insert(revAdjList.begin(),node->getId(),new Node(node->getId()));
+            //revAdjList.insert(revAdjList.begin(),node->getId(),new Node(node->getId()));
+            revAdjList.push_back(new Node(node->getId()));
         }
 
-        for(int i = 0; i < revAdjList.size(); i++){
-            for(int id = 0; id < revAdjList.at(i)->getAdjNodes().size(); id++){
-                revAdjList.at(id)->addAdjNode(i);
+        for(int i = 0; i < adjList.size(); i++){
+            int adjListRuleId = adjList.at(i)->getId();
+
+            for(int adjNodeId : adjList.at(adjListRuleId)->getAdjNodes()){
+
+
+                revAdjList.at(adjNodeId)->addAdjNode(adjListRuleId);
             }
 
         }
+
     }
 
 public:
@@ -115,7 +175,12 @@ public:
         for(int i = 0; i < rules.size(); i++){
             //Loop through each predicate in rule and add adjNodes
             for(Predicate* pred : rules.at(i)->getPredicates()){
-                adjList.at(i)->addAdjNodes(ruleMap.at(pred->getId()));
+                try{
+                    adjList.at(i)->addAdjNodes(ruleMap.at(pred->getId()));
+                }
+                catch(exception e){
+
+                }
             }
         }
 
@@ -124,11 +189,20 @@ public:
         dfsForest();
         dfsForestPostOrder();
 
+        //printNodesInfo();
+
         return sccList;
     }
 
+    void printDependency(){
+        for(Node* node : adjList){
+            node->printNode();
+        }
+    }
 
-
+    vector<Node*> getAdjNodes(){
+        return adjList;
+    }
 };
 
 #endif //PROJECT1_STARTER_CODE_GRAPH_H

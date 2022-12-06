@@ -41,24 +41,50 @@ public:
     void InterpretRules(){
         int ogDataSize = database.getSize();
         int newDataSize = ogDataSize + 1;
-        int runThroughCount = 0;
+
+        vector<Rule*> rules = program->getRules();
 
         Graph graph;
-        vector<vector<int>> sccList = graph.runGraphOptimization(program->getRules());
+        vector<vector<int>> sccList = graph.runGraphOptimization(rules);
+
+        cout << "Dependency Graph" << endl;
+        graph.printDependency();
+        cout << endl;
 
         cout << "Rule Evaluation" << endl;
 
-        while(ogDataSize != newDataSize) {
-            ogDataSize = database.getSize();
+        for(int sccIndex = 0; sccIndex < sccList.size(); sccIndex++) {
+            vector<int> ruleList = sccList.at(sccIndex);
+            newDataSize = ogDataSize + 1;
+            int runThroughCount = 0;
+            bool sink = false;
+            if(ruleList.size() == 1){
 
-            for (Rule *rule : program->getRules()) {
+                sink = graph.getAdjNodes().at(ruleList.at(0))->isSink();
+            }
+
+            //make SCC string
+            string adjString;
+            for(int i : ruleList){
+                adjString = adjString + "R" + to_string(i) + ",";
+            }
+            string st = adjString.substr(0, adjString.size()-1);
+            cout << "SCC: " << st << endl;
+
+            while (ogDataSize != newDataSize) {
+                ogDataSize = database.getSize();
+
+                for (int ruleIndex = 0; ruleIndex < ruleList.size(); ruleIndex++) {
+                    Rule* rule = rules.at(ruleList.at(ruleIndex));
+
                     string headId = rule->getHead()->getId();
                     int predCount = rule->getPredicates().size();
                     Relation *f1;
 
                     //Join all predicates
                     if (predCount > 1) {
-                        f1 = runTwo(evaluateRulePredicate(rule->getPredicates().at(predCount - 2)), evaluateRulePredicate(rule->getPredicates().at(predCount - 1)));
+                        f1 = runTwo(evaluateRulePredicate(rule->getPredicates().at(predCount - 2)),
+                                    evaluateRulePredicate(rule->getPredicates().at(predCount - 1)));
                         predCount--;
 
                         while (predCount > 1) {
@@ -78,7 +104,7 @@ public:
                     //Project new Relation
                     vector<int> newColumns;
 
-                    for (string param : rule->getHead()->getParamsStringList()) {
+                    for (string param: rule->getHead()->getParamsStringList()) {
                         for (long unsigned int i = 0; i < f1->getHeader().getValues().size(); i++) {
                             //cout << param << " == " << f1->getHeader().getValues().at(i) << endl;
                             if (param == f1->getHeader().getValues().at(i)) {
@@ -93,7 +119,7 @@ public:
                     Relation *f3 = f2->rename(database.getRelation(headId)->getHeader().getValues());
 
                     //Concat new data to OG database relation
-                    Relation* newStuff = database.getRelation(headId)->concat(f3);
+                    Relation *newStuff = database.getRelation(headId)->concat(f3);
 
                     //print evaluation
 
@@ -111,12 +137,19 @@ public:
 
                     cout << headerString << endl << extra;
 
+                }
+
+                newDataSize = database.getSize();
+                if(sink){
+                    ogDataSize = newDataSize;
+                }
+                runThroughCount++;
             }
-            newDataSize = database.getSize();
-            runThroughCount++;
+            cout << runThroughCount << " passes: " << st << endl;
         }
 
-        cout << endl << "Schemes populated after " << runThroughCount << " passes through the Rules." << endl << endl << "Query Evaluation" << endl;
+        //cout << endl << "Schemes populated after " << runThroughCount << " passes through the Rules." << endl << endl << "Query Evaluation" << endl;
+        cout << endl << "Query Evaluation" << endl;
 
 
 
