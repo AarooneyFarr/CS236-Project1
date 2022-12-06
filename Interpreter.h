@@ -59,10 +59,11 @@ public:
             int runThroughCount = 0;
             bool sink = false;
             if(ruleList.size() == 1){
-                Node* nodeOne = graph.getAdjNodes().at(ruleList.at(0));
-                if(nodeOne->getId() == nodeOne->getFirstAdj()){
+                if(graph.getAdjNodes().at(ruleList.at(0))->isSink()){
                     sink = true;
                 }
+                //sink = graph.getAdjNodes().at(ruleList.at(0))->isSink();
+
             }
 
             //make SCC string
