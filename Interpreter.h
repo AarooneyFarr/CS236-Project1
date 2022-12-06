@@ -64,14 +64,11 @@ public:
                 }
                 else{
                    Node* node =  graph.getAdjNodes().at(ruleList.at(0));
-                    int track = 0;
+                    sink = true;
                    for(int i : node->getAdjNodes()){
                        if(node->getId() == i){
-                           track++;
+                           sink = false;
                        }
-                   }
-                   if(track == 0){
-                       sink = true;;
                    }
 
 
