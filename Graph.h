@@ -89,6 +89,8 @@ private:
                 for(int nodeId : newGrouping){
                     postOrder.push_back(nodeId);
                 }
+
+
             }
         }
     }
@@ -96,6 +98,8 @@ private:
     void dfsForestPostOrder2(){
         preOrder = postOrder;
         reverse(preOrder.begin(), preOrder.end());
+
+        printOrder(postOrder);
 
         for(long unsigned int i = 0; i < preOrder.size(); i++){
             Node* node = adjList.at(preOrder.at(i));
@@ -106,7 +110,16 @@ private:
 
                 reverse(newGrouping.begin(), newGrouping.end());
 
-                sccList.push_back(newGrouping);
+                set<int> nodeSet;
+                for(int i : newGrouping){
+                    nodeSet.insert(i);
+                }
+                vector<int> ordered;
+                for(int i : nodeSet){
+                    ordered.push_back(i);
+                }
+
+                sccList.push_back(ordered);
             }
         }
     }
@@ -149,6 +162,14 @@ private:
         for(Node* node : revAdjList){
             node->printNode();
         }
+    }
+
+    void printOrder(vector<int> order){
+        cout << "Postorder: ";
+        for(int i : order){
+            cout << i << " ";
+        }
+        cout << endl;
     }
 
     void printNodesInfo(){
