@@ -175,12 +175,10 @@ public:
         for(long unsigned int i = 0; i < rules.size(); i++){
             //Loop through each predicate in rule and add adjNodes
             for(Predicate* pred : rules.at(i)->getPredicates()){
-                try{
+                if(ruleMap.count(pred->getId())) {
                     adjList.at(i)->addAdjNodes(ruleMap.at(pred->getId()));
                 }
-                catch(exception e){
 
-                }
             }
         }
 
