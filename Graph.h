@@ -56,9 +56,63 @@ private:
         }
     }
 
+    void dfs(Node* node, vector<int> &newGrouping){
+        //vector<int> newGrouping;
+        node->setVisited(true);
+        newGrouping.insert(newGrouping.begin(), node->getId());
+
+        for(int i : node->getAdjNodes()){
+            if(revAdjList.at(i)->isVisited() != true){
+                dfs(revAdjList.at(i), newGrouping);
+            }
+        }
+    }
+
+    void dfsF(Node* node, vector<int> &newGrouping){
+        //vector<int> newGrouping;
+        node->setVisited(true);
+        newGrouping.insert(newGrouping.begin(), node->getId());
+
+        for(int i : node->getAdjNodes()){
+            if(adjList.at(i)->isVisited() != true){
+                dfsF(adjList.at(i), newGrouping);
+            }
+        }
+    }
+
+    void dfsForest2(){
+        for(Node* node: revAdjList){
+            if(node->isVisited() == false){
+                vector<int> newGrouping;
+                dfs(node, newGrouping);
+
+                for(int nodeId : newGrouping){
+                    postOrder.push_back(nodeId);
+                }
+            }
+        }
+    }
+
+    void dfsForestPostOrder2(){
+        preOrder = postOrder;
+        reverse(preOrder.begin(), preOrder.end());
+
+        for(int i = 0; i < preOrder.size(); i++){
+            Node* node = adjList.at(preOrder.at(i));
+
+            if(node->isVisited() == false){
+                vector<int> newGrouping;
+                dfsF(node, newGrouping);
+
+                sccList.push_back(newGrouping);
+            }
+        }
+    }
+
     void dfsForestPostOrder(){
         preOrder = postOrder;
         reverse(preOrder.begin(), preOrder.end());
+
 
         for(long unsigned int nodeIt = 0; nodeIt < preOrder.size(); nodeIt++){
             Node* node = adjList.at(preOrder.at(nodeIt));
@@ -84,6 +138,7 @@ private:
                     }
                 }
                 sccList.push_back(newGrouping);
+
             }
         }
     }
@@ -184,10 +239,15 @@ public:
 
         //Run algorithms
         populateReverseGraph();
-        dfsForest();
-        dfsForestPostOrder();
+        dfsForest2();
+        dfsForestPostOrder2();
 
+//        for(int i : postOrder){
+//            cout << i << " ";
+//        }
         //printNodesInfo();
+        printSCC();
+
 
         return sccList;
     }
