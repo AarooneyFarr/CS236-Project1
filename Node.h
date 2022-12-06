@@ -64,7 +64,7 @@ public:
         vector<int> v(adjacentNodes.begin(), adjacentNodes.end());
         adjNodeVector = v;
 
-        for(int i = 0; i < v.size(); i++){
+        for(long unsigned int i = 0; i < v.size(); i++){
             if(nodeAdjList.at(v.at(i))->visited == false){
                 return v.at(i);
             }

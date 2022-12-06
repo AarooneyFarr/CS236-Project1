@@ -53,7 +53,7 @@ public:
 
         cout << "Rule Evaluation" << endl;
 
-        for(int sccIndex = 0; sccIndex < sccList.size(); sccIndex++) {
+        for(long unsigned int sccIndex = 0; sccIndex < sccList.size(); sccIndex++) {
             vector<int> ruleList = sccList.at(sccIndex);
             newDataSize = ogDataSize + 1;
             int runThroughCount = 0;
@@ -74,7 +74,7 @@ public:
             while (ogDataSize != newDataSize) {
                 ogDataSize = database.getSize();
 
-                for (int ruleIndex = 0; ruleIndex < ruleList.size(); ruleIndex++) {
+                for (long unsigned int ruleIndex = 0; ruleIndex < ruleList.size(); ruleIndex++) {
                     Rule* rule = rules.at(ruleList.at(ruleIndex));
 
                     string headId = rule->getHead()->getId();

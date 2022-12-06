@@ -60,7 +60,7 @@ private:
         preOrder = postOrder;
         reverse(preOrder.begin(), preOrder.end());
 
-        for(int nodeIt = 0; nodeIt < preOrder.size(); nodeIt++){
+        for(long unsigned int nodeIt = 0; nodeIt < preOrder.size(); nodeIt++){
             Node* node = adjList.at(preOrder.at(nodeIt));
 
             if(node->isVisited() == false){
@@ -125,7 +125,7 @@ private:
             revAdjList.push_back(new Node(node->getId()));
         }
 
-        for(int i = 0; i < adjList.size(); i++){
+        for(long unsigned int i = 0; i < adjList.size(); i++){
             int adjListRuleId = adjList.at(i)->getId();
 
             for(int adjNodeId : adjList.at(adjListRuleId)->getAdjNodes()){
@@ -151,11 +151,11 @@ public:
         map<string, set<int>> ruleMap;
 
         //Populate ruleNames
-        for(int i = 0; i < rules.size(); i++){
+        for(long unsigned int i = 0; i < rules.size(); i++){
             vector<int> otherRules;
             set<int> mapRules;
 
-            for(int j = 0; j < rules.size(); j++){
+            for(long unsigned int j = 0; j < rules.size(); j++){
                 if(rules.at(i)->getHead()->getId() == rules.at(j)->getHead()->getId()){
                     otherRules.push_back(j);
                     mapRules.insert(j);
@@ -167,18 +167,18 @@ public:
         }
 
         //Add each rule as a node
-        for(int i = 0; i<rules.size(); i++){
+        for(long unsigned int i = 0; i<rules.size(); i++){
             adjList.push_back(new Node(i));
         }
 
         //Add adjacency to nodes - loop through rules
-        for(int i = 0; i < rules.size(); i++){
+        for(long unsigned int i = 0; i < rules.size(); i++){
             //Loop through each predicate in rule and add adjNodes
             for(Predicate* pred : rules.at(i)->getPredicates()){
                 try{
                     adjList.at(i)->addAdjNodes(ruleMap.at(pred->getId()));
                 }
-                catch(exception e){
+                catch(perror e){
 
                 }
             }
