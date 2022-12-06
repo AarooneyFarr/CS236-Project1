@@ -94,7 +94,7 @@ public:
             adjString = adjString + "R" + to_string(i) + ",";
         }
         string st = adjString.substr(0, adjString.size()-1);
-        cout << adjString << endl;
+        cout << st << endl;
     }
 
     void printNode(){
