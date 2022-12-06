@@ -58,13 +58,13 @@ public:
             newDataSize = ogDataSize + 1;
             int runThroughCount = 0;
             bool sink = false;
-            if(graph.getAdjNodes().at(ruleList.at(0))->getAdjNodes().size() <= 1){
+            if(sccList.at(sccIndex).size() <= 1){
                 if(graph.getAdjNodes().at(ruleList.at(0))->isSink()){
                     sink = true;
                 }
                 else{
                    Node* node =  graph.getAdjNodes().at(ruleList.at(0));
-
+                    
                    if(node->getId() != node->getFirstAdj()){
                        sink = true;
                    }
