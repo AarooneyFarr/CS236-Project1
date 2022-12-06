@@ -178,7 +178,7 @@ public:
                 try{
                     adjList.at(i)->addAdjNodes(ruleMap.at(pred->getId()));
                 }
-                catch(perror e){
+                catch(exception e){
 
                 }
             }
