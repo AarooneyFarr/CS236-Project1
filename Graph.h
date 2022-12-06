@@ -99,7 +99,7 @@ private:
         preOrder = postOrder;
         reverse(preOrder.begin(), preOrder.end());
 
-        printOrder(postOrder);
+        //printOrder(postOrder);
 
         for(long unsigned int i = 0; i < preOrder.size(); i++){
             Node* node = adjList.at(preOrder.at(i));
