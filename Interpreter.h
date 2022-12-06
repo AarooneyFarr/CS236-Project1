@@ -58,7 +58,7 @@ public:
             newDataSize = ogDataSize + 1;
             int runThroughCount = 0;
             bool sink = false;
-            if(ruleList.size() == 1){
+            if(graph.getAdjNodes().at(ruleList.at(0))->getAdjNodes().size() == 1){
                 if(graph.getAdjNodes().at(ruleList.at(0))->isSink()){
                     sink = true;
                 }
