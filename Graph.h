@@ -97,7 +97,7 @@ private:
         preOrder = postOrder;
         reverse(preOrder.begin(), preOrder.end());
 
-        for(int i = 0; i < preOrder.size(); i++){
+        for(long unsigned int i = 0; i < preOrder.size(); i++){
             Node* node = adjList.at(preOrder.at(i));
 
             if(node->isVisited() == false){
@@ -246,7 +246,7 @@ public:
 //            cout << i << " ";
 //        }
         //printNodesInfo();
-        printSCC();
+        //printSCC();
 
 
         return sccList;
