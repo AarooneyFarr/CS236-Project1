@@ -68,6 +68,23 @@ private:
         }
     }
 
+    vector<int> dfs2(Node* node){
+        vector<int> parentGrouping;
+        node->setVisited(true);
+
+
+        for(int i : node->getAdjNodes()){
+            if(revAdjList.at(i)->isVisited() != true){
+                vector<int> childGrouping = dfs2(revAdjList.at(i));
+                parentGrouping.insert(parentGrouping.end(), childGrouping.begin(), childGrouping.end());
+            }
+        }
+
+        parentGrouping.push_back(node->getId());
+
+        return parentGrouping;
+    }
+
     void dfsF(Node* node, vector<int> &newGrouping){
         //vector<int> newGrouping;
         node->setVisited(true);
@@ -85,6 +102,21 @@ private:
             if(node->isVisited() == false){
                 vector<int> newGrouping;
                 dfs(node, newGrouping);
+
+                for(int nodeId : newGrouping){
+                    postOrder.push_back(nodeId);
+                }
+
+
+            }
+        }
+    }
+
+
+    void dfsForest22(){
+        for(Node* node: revAdjList){
+            if(node->isVisited() == false){
+                vector<int> newGrouping = dfs2(node);
 
                 for(int nodeId : newGrouping){
                     postOrder.push_back(nodeId);
@@ -262,14 +294,14 @@ public:
 
         //Run algorithms
         populateReverseGraph();
-        dfsForest2();
+        dfsForest22();
         dfsForestPostOrder2();
 
 //        for(int i : postOrder){
 //            cout << i << " ";
 //        }
         //printNodesInfo();
-        //printSCC();
+        //printOrder(postOrder);
 
 
         return sccList;

@@ -65,15 +65,15 @@ public:
                 else{
                    Node* node =  graph.getAdjNodes().at(ruleList.at(0));
 
-                    for(int i : node->getAdjNodes()){
-                        if(node->getId() == i){
+                    for(int i : node->getAdjNodes()) {
+                        if (node->getId() == i) {
                             sink = false;
                             break;
                         }
-                        else{
+                        else {
                             sink = true;
                         }
-
+                    }
                 }
                 //sink = graph.getAdjNodes().at(ruleList.at(0))->isSink();
 
