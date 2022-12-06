@@ -62,6 +62,14 @@ public:
                 if(graph.getAdjNodes().at(ruleList.at(0))->isSink()){
                     sink = true;
                 }
+                else{
+                   Node* node =  graph.getAdjNodes().at(ruleList.at(0));
+
+                   if(node->getId() != node->getFirstAdj()){
+                       sink = true;
+                   }
+
+                }
                 //sink = graph.getAdjNodes().at(ruleList.at(0))->isSink();
 
             }
