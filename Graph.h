@@ -104,6 +104,8 @@ private:
                 vector<int> newGrouping;
                 dfsF(node, newGrouping);
 
+                reverse(newGrouping.begin(), newGrouping.end());
+
                 sccList.push_back(newGrouping);
             }
         }
